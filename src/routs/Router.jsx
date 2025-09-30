@@ -4,6 +4,8 @@ import RootLayout from '../layout/RootLayout';
 import Home from '../pages/Home';
 import Error from '../pages/Error';
 import DashboardLayout from '../layout/DashboardLayout';
+import LoanForm from '../pages/lone/LoanForm ';
+import LoanSavingCollectionForm from '../pages/lone/LoanSavingCollectionForm';
 
 
 
@@ -40,12 +42,12 @@ const router = createBrowserRouter(
         {
             path: "/dashboard",
             element: <DashboardLayout />,
-            // children: [
-            //   { path: "members", element: <Members /> },
-            //   { path: "fees", element: <Fees /> },
+            children: [
+              { path: "/dashboard/loan-create", element: <LoanForm /> },
+              { path: "/dashboard/loan-savings-collection", element: <LoanSavingCollectionForm /> },
             //   { path: "reports", element: <Reports /> },
             //   { path: "settings", element: <Settings /> },
-            // ],
+            ],
           },
         {
             path:"*",
