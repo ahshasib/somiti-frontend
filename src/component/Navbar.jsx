@@ -1,8 +1,9 @@
 import React from 'react'
+import { Link } from 'react-router'
 
 const Navbar = () => {
   return (
-    <div className=' bg-base-100 shadow-xl'>
+    <div className=' bg-gradient-to-r from-indigo-50 to-purple-50 shadow-xl'>
         <div class="navbar w-11/12 mx-auto">
   <div class="navbar-start">
     <div class="dropdown">
@@ -29,7 +30,7 @@ const Navbar = () => {
     <ul class="menu menu-horizontal px-1">
       <li><a>Item 1</a></li>
       <li><a>Item </a></li>
-      <li><a>Item 3</a></li>
+      <li><Link to="/dashboard">ড্যাশবোর্ড</Link></li>
     </ul>
   </div>
   <div class="navbar-end">

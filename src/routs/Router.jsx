@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router'
 import RootLayout from '../layout/RootLayout';
 import Home from '../pages/Home';
 import Error from '../pages/Error';
+import DashboardLayout from '../layout/DashboardLayout';
 
 
 
@@ -36,6 +37,16 @@ const router = createBrowserRouter(
             
             ]
         },
+        {
+            path: "/dashboard",
+            element: <DashboardLayout />,
+            // children: [
+            //   { path: "members", element: <Members /> },
+            //   { path: "fees", element: <Fees /> },
+            //   { path: "reports", element: <Reports /> },
+            //   { path: "settings", element: <Settings /> },
+            // ],
+          },
         {
             path:"*",
             element:<Error></Error>

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const HeroSection = () => {
     return (
@@ -22,9 +23,11 @@ const HeroSection = () => {
                         আপনার সমিতির কার্যক্রম এখন হবে আরও স্বচ্ছ, সঠিক এবং দ্রুত। <br />
                         সময় ও খরচ বাঁচিয়ে আনুন আধুনিক ব্যবস্থাপনার সুবিধা।
                     </p>
+                    <Link to="/dashboard">
                     <button className="px-6 py-3 cursor-pointer text-white font-semibold rounded-lg shadow-lg bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 hover:from-yellow-500 hover:via-red-500 hover:to-pink-500 transition-all duration-500">
                         শুরু করুন
                     </button>
+                    </Link>
                 </div>
 
 
@@ -34,7 +37,7 @@ const HeroSection = () => {
                     <img
                         src="/3.jpg"
                         alt="Hero Illustration"
-                        className="w-80 md:w-full "
+                        className="w-full md:w-full "
                     />
                 </div>
             </div>
