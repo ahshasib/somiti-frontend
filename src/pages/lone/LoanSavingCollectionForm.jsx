@@ -143,10 +143,10 @@ const LoanSavingCollectionForm = () => {
         </div>
 
         {/* Submit */}
-        <div className="text-right">
+        <div className="text-center">
           <button
             type="submit"
-            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition text-sm"
+            className="bg-green-600 cursor-pointer text-white px-4 py-2 rounded hover:bg-green-700 transition text-sm"
           >
             কালেকশন জমা দিন
           </button>

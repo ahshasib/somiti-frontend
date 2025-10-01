@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router";
 import {
     FaUsers,
     FaUserTie,
@@ -153,13 +153,13 @@ const Aside = () => {
             <ul className="ml-4 mt-2 space-y-1">
               {category.subMenu.map((item, subIdx) => (
                 <li key={subIdx}>
-                  <Link
+                  <NavLink
                     to={item.path}
                     className="flex items-center gap-2 px-4 py-2 rounded-lg text-gray-600 hover:bg-indigo-200 hover:text-gray-900 transition-all duration-200"
                   >
                     {item.icon} {/* Sub-menu icon */}
                     {item.name}
-                  </Link>
+                  </NavLink>
                 </li>
               ))}
             </ul>
