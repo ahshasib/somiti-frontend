@@ -6,6 +6,8 @@ import Error from '../pages/Error';
 import DashboardLayout from '../layout/DashboardLayout';
 import LoanForm from '../pages/lone/LoanForm ';
 import LoanSavingCollectionForm from '../pages/lone/LoanSavingCollectionForm';
+import AllLoans from '../pages/lone/AllLoans';
+import LoanCollection from '../pages/lone/LoanCollection';
 
 
 
@@ -45,8 +47,8 @@ const router = createBrowserRouter(
             children: [
               { path: "/dashboard/loan-create", element: <LoanForm /> },
               { path: "/dashboard/loan-savings-collection", element: <LoanSavingCollectionForm /> },
-            //   { path: "reports", element: <Reports /> },
-            //   { path: "settings", element: <Settings /> },
+              { path: "/dashboard/all-loans", element: <AllLoans /> },
+              { path: "/dashboard/loan-installment-collection", element: <LoanCollection /> },
             ],
           },
         {

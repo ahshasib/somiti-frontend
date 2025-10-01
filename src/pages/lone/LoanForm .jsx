@@ -13,6 +13,12 @@ const LoanForm = () => {
   const [installmentAmount, setInstallmentAmount] = useState("");
   const [description, setDescription] = useState("");
   const [sendSMS, setSendSMS] = useState(false);
+  const [loanDate, setLoanDate] = useState(() => {
+    const today = new Date();
+    return today.toISOString().split("T")[0]; 
+    // যেমন "2025-10-02"
+  });
+  
 
   const navigate = useNavigate();
 
@@ -40,8 +46,11 @@ const LoanForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+     // date কে number আকারে convert
+  
 
     const loanData = {
+      date: new Date(loanDate),  
       memberName,
       loanAmount: parseFloat(loanAmount),
       dividend: parseFloat(dividend),
@@ -53,7 +62,7 @@ const LoanForm = () => {
     };
 
     try {
-      const res = await axios.post("http://localhost:3000/api/loans", loanData);
+      const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/loans`, loanData);
       console.log("Server Response:", res.data);
       alert("Loan Saved Successfully!");
     } catch (err) {
@@ -73,9 +82,11 @@ const LoanForm = () => {
           <label className="w-40 font-medium">*তারিখঃ</label>
           <input
             type="date"
-            defaultValue="2025-10-01"
+            value={loanDate}
+            onChange={(e) => setLoanDate(e.target.value)}
             className="flex-1 border rounded px-2 py-1 text-sm"
           />
+
         </div>
 
         {/* সদস্যর নাম */}
