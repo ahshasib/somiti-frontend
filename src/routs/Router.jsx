@@ -15,6 +15,7 @@ import OverdueInstallments from '../pages/lone/OverdueInstallments';
 import CloseLoansPage from '../pages/lone/CloseLoansPage';
 import LoanApplicationForm from '../pages/lone/LoanApplicationForm';
 import MembersPage from '../pages/members/MembersPage';
+import MemberList from '../pages/members/MemberList';
 
 
 
@@ -65,6 +66,8 @@ const router = createBrowserRouter(
               //members
               { path: "/dashboard/member-create", element: <CreateMember /> },
               { path: "/dashboard/member-info", element: <MembersPage /> },
+              { path: "/dashboard/member-list", element: <MemberList /> },
+              
               
             ],
           },
