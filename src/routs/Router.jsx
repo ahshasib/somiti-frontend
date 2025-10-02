@@ -9,6 +9,10 @@ import LoanSavingCollectionForm from '../pages/lone/LoanSavingCollectionForm';
 import AllLoans from '../pages/lone/AllLoans';
 import LoanCollection from '../pages/lone/LoanCollection';
 import CreateMember from '../pages/members/CreateMember';
+import LoansCollectionPage from '../pages/lone/LoansCollectionPage';
+import TodayInstallments from '../pages/lone/TodayInstallments';
+import OverdueInstallments from '../pages/lone/OverdueInstallments';
+import CloseLoansPage from '../pages/lone/CloseLoansPage';
 
 
 
@@ -52,6 +56,10 @@ const router = createBrowserRouter(
               { path: "/dashboard/all-loans", element: <AllLoans /> },
               { path: "/dashboard/loan-installment-collection", element: <LoanCollection /> },
               { path: "/dashboard/member-create", element: <CreateMember /> },
+              { path: "/dashboard/all-loan-installments", element: <LoansCollectionPage /> },
+              { path: "/dashboard/today-installment", element: <TodayInstallments /> },
+              { path: "/dashboard/expire", element: <OverdueInstallments /> },
+              { path: "/dashboard/close-loan", element: <CloseLoansPage/> },
             ],
           },
         {

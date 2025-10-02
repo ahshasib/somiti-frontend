@@ -1,39 +1,29 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-// লোনের কিস্তি কালেকশন page
+// লোনের কিস্তি কালেকশন
 const LoanCollection = () => {
   const [areas, setAreas] = useState([]);
   const [members, setMembers] = useState([]);
   const [loans, setLoans] = useState([]);
+
   const [formData, setFormData] = useState({
     date: new Date().toISOString().split("T")[0],
     area: "",
-    memberName: "",
+    memberId: "",   // এখানে memberId রাখা হবে
     selectedLoan: "",
     amount: "",
     description: "",
     sendSMS: false,
-    balance: 846,
+    balance: 0,
   });
-
-  // Fetch areas
-  useEffect(() => {
-    const fetchAreas = async () => {
-      try {
-        const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/areas`);
-        setAreas(res.data);
-      } catch (err) {
-        console.error("Error fetching areas:", err);
-      }
-    };
-    fetchAreas();
-  }, []);
 
   // Fetch members
   useEffect(() => {
     const fetchMembers = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/members`);
+        const res = await axios.get(
+          `${import.meta.env.VITE_BASE_URL}/api/members`
+        );
         setMembers(res.data);
       } catch (err) {
         console.error("Error fetching members:", err);
@@ -45,16 +35,18 @@ const LoanCollection = () => {
   // Fetch loans for selected member
   useEffect(() => {
     const fetchLoans = async () => {
-      if (!formData.memberName) return;
+      if (!formData.memberId) return;
       try {
-        const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/loans?member=${formData.memberName}`);
+        const res = await axios.get(
+          `${import.meta.env.VITE_BASE_URL}/api/loans?memberId=${formData.memberId}`
+        );
         setLoans(res.data);
       } catch (err) {
         console.error("Error fetching loans:", err);
       }
     };
     fetchLoans();
-  }, [formData.memberName]);
+  }, [formData.memberId]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -72,25 +64,33 @@ const LoanCollection = () => {
     }
 
     try {
-      const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/loans/collection`, {
-        loanId: formData.selectedLoan,
-        collectionAmount: parseFloat(formData.amount),
-        description: formData.description,
-        sendSMS: formData.sendSMS,
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/api/loans/collection`,
+        {
+          loanId: formData.selectedLoan,
+          collectionAmount: parseFloat(formData.amount),
+          description: formData.description,
+          sendSMS: formData.sendSMS,
+        }
+      );
 
       alert(`Collection saved! Current due: ${res.data.currentDue}`);
 
-      // Update frontend loan data
+      // Update loan list
       setLoans((prev) =>
         prev.map((l) =>
-          l._id === formData.selectedLoan ? { ...l, totalLoan: res.data.currentDue, collections: res.data.loan.collections } : l
+          l._id === formData.selectedLoan
+            ? {
+                ...l,
+                totalLoan: res.data.currentDue,
+                collections: res.data.loan.collections,
+              }
+            : l
         )
       );
 
       // Reset amount & description
       setFormData({ ...formData, amount: "", description: "" });
-
     } catch (err) {
       console.error(err);
       alert("Error saving collection");
@@ -103,7 +103,6 @@ const LoanCollection = () => {
     <div className="max-w-3xl mx-auto p-6 bg-white shadow-md rounded-md">
       <h2 className="text-2xl font-bold mb-6">লোনের কিস্তি কালেকশন</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-
         {/* তারিখ */}
         <div>
           <label className="block font-medium">*তারিখঃ</label>
@@ -127,7 +126,9 @@ const LoanCollection = () => {
           >
             <option value="">এলাকা নির্বাচন করুন</option>
             {areas.map((area) => (
-              <option key={area._id} value={area.name}>{area.name}</option>
+              <option key={area._id} value={area.name}>
+                {area.name}
+              </option>
             ))}
           </select>
         </div>
@@ -136,14 +137,16 @@ const LoanCollection = () => {
         <div>
           <label className="block font-medium">*সদস্যর নামঃ</label>
           <select
-            name="memberName"
-            value={formData.memberName}
+            name="memberId"
+            value={formData.memberId}
             onChange={handleChange}
             className="border px-3 py-2 rounded w-full"
           >
             <option value="">সদস্য নির্বাচন করুন</option>
             {members.map((m) => (
-              <option key={m._id} value={m.name}>{m.name}</option>
+              <option key={m._id} value={m._id}>
+                {m.name} ({m.mobileNumber})
+              </option>
             ))}
           </select>
         </div>
@@ -214,7 +217,7 @@ const LoanCollection = () => {
         </div>
 
         {/* Balance */}
-        <div>
+        {/* <div>
           <label className="block font-medium">ব্যালেন্সঃ</label>
           <input
             type="text"
@@ -223,7 +226,7 @@ const LoanCollection = () => {
             disabled
             className="border px-3 py-2 rounded w-full bg-gray-100"
           />
-        </div>
+        </div> */}
 
         <button
           type="submit"

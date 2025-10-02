@@ -3,10 +3,12 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const LoanForm = () => {
-  const [memberName, setMemberName] = useState("");
+  const [members, setMembers] = useState([]); // সব সদস্যের লিস্ট
+  const [selectedMember, setSelectedMember] = useState(null); // নির্বাচিত সদস্য অবজেক্ট
+
   const [loanAmount, setLoanAmount] = useState("");
   const [dividend, setDividend] = useState(0);
-  const [dividendType, setDividendType] = useState("%"); // নতুন state
+  const [dividendType, setDividendType] = useState("%");
   const [totalLoan, setTotalLoan] = useState(0);
   const [installmentType, setInstallmentType] = useState("");
   const [installments, setInstallments] = useState("");
@@ -15,12 +17,23 @@ const LoanForm = () => {
   const [sendSMS, setSendSMS] = useState(false);
   const [loanDate, setLoanDate] = useState(() => {
     const today = new Date();
-    return today.toISOString().split("T")[0]; 
-    // যেমন "2025-10-02"
+    return today.toISOString().split("T")[0];
   });
-  
 
   const navigate = useNavigate();
+
+  // 🔹 সব সদস্য লোড করা
+  useEffect(() => {
+    const fetchMembers = async () => {
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/members`);
+        setMembers(res.data); // ধরে নিচ্ছি সার্ভার থেকে array আসবে
+      } catch (err) {
+        console.error("Error fetching members:", err);
+      }
+    };
+    fetchMembers();
+  }, []);
 
   // মোট লোন ক্যালকুলেশন
   useEffect(() => {
@@ -43,20 +56,26 @@ const LoanForm = () => {
     }
   }, [installments, totalLoan]);
 
-
+  // ফর্ম সাবমিট
   const handleSubmit = async (e) => {
     e.preventDefault();
-     // date কে number আকারে convert
-  
+
+    if (!selectedMember) {
+      alert("সদস্য নির্বাচন করুন");
+      return;
+    }
 
     const loanData = {
-      date: new Date(loanDate),  
-      memberName,
+      date: new Date(loanDate),
+      memberId: selectedMember.memberId,  // ✅ Custom MemberId যাবে
+      member: selectedMember._id,        // ✅ MongoDB _id ও পাঠাতে পারো চাইলে
       loanAmount: parseFloat(loanAmount),
       dividend: parseFloat(dividend),
       dividendType,
+      totalLoan: parseFloat(totalLoan),
       installmentType,
       installments: parseInt(installments),
+      installmentAmount: parseFloat(installmentAmount),
       description,
       sendSMS,
     };
@@ -70,7 +89,6 @@ const LoanForm = () => {
       alert("Error saving loan data");
     }
   };
-
 
   return (
     <div className="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md mt-10">
@@ -86,21 +104,25 @@ const LoanForm = () => {
             onChange={(e) => setLoanDate(e.target.value)}
             className="flex-1 border rounded px-2 py-1 text-sm"
           />
-
         </div>
 
-        {/* সদস্যর নাম */}
+        {/* সদস্য নির্বাচন */}
         <div className="flex items-center gap-4">
           <label className="w-40 font-medium">*সদস্যর নামঃ</label>
           <select
-            value={memberName}
-            onChange={(e) => setMemberName(e.target.value)}
+            value={selectedMember ? selectedMember._id : ""}
+            onChange={(e) => {
+              const member = members.find((m) => m._id === e.target.value);
+              setSelectedMember(member || null);
+            }}
             className="flex-1 border rounded px-2 py-1 text-sm"
           >
             <option value="">-- বাছাই করুন --</option>
-            <option value="সদস্য ১">সদস্য ১</option>
-            <option value="সদস্য ২">সদস্য ২</option>
-            <option value="সদস্য ৩">সদস্য ৩</option>
+            {members.map((m) => (
+              <option key={m._id} value={m._id}>
+                {m.name} ({m.memberId})  {/* ✅ Custom ID দেখাচ্ছি */}
+              </option>
+            ))}
           </select>
           <button
             type="button"
@@ -111,18 +133,7 @@ const LoanForm = () => {
           </button>
         </div>
 
-        {/* বর্তমান টাকা */}
-        {/* <div className="flex items-center gap-4">
-          <label className="w-40 font-medium">বর্তমান টাকাঃ</label>
-          <input
-            type="text"
-            value="0.00"
-            readOnly
-            className="flex-1 border rounded px-2 py-1 text-sm bg-gray-100"
-          />
-        </div> */}
-
-        {/* লোনের পরিমান */}
+        {/* Loan Amount */}
         <div className="flex items-center gap-4">
           <label className="w-40 font-medium">*লোনের পরিমানঃ</label>
           <input
@@ -150,7 +161,7 @@ const LoanForm = () => {
               className="border rounded px-2 py-1 text-sm"
             >
               <option value="%">%</option>
-              <option value="$">৳</option>
+              <option value="৳">৳</option>
             </select>
           </div>
         </div>
@@ -226,17 +237,6 @@ const LoanForm = () => {
           />
           <label>SMS পাঠাতে চান?</label>
         </div>
-
-        {/* ব্যালেন্স */}
-        {/* <div className="flex items-center gap-4">
-          <label className="w-40 font-medium">ব্যালেন্সঃ</label>
-          <input
-            type="text"
-            value="0"
-            readOnly
-            className="flex-1 border rounded px-2 py-1 text-sm bg-gray-100"
-          />
-        </div> */}
 
         {/* Submit */}
         <div className="text-center">
