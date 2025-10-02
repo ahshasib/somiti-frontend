@@ -69,6 +69,7 @@ const LoanForm = () => {
       date: new Date(loanDate),
       memberId: selectedMember.memberId,  // ✅ Custom MemberId যাবে
       member: selectedMember._id,        // ✅ MongoDB _id ও পাঠাতে পারো চাইলে
+      name: selectedMember.name, 
       loanAmount: parseFloat(loanAmount),
       dividend: parseFloat(dividend),
       dividendType,

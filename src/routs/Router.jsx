@@ -13,6 +13,7 @@ import LoansCollectionPage from '../pages/lone/LoansCollectionPage';
 import TodayInstallments from '../pages/lone/TodayInstallments';
 import OverdueInstallments from '../pages/lone/OverdueInstallments';
 import CloseLoansPage from '../pages/lone/CloseLoansPage';
+import LoanApplicationForm from '../pages/lone/LoanApplicationForm';
 
 
 
@@ -60,6 +61,7 @@ const router = createBrowserRouter(
               { path: "/dashboard/today-installment", element: <TodayInstallments /> },
               { path: "/dashboard/expire", element: <OverdueInstallments /> },
               { path: "/dashboard/close-loan", element: <CloseLoansPage/> },
+              { path: "/dashboard/loan-application", element: <LoanApplicationForm/> },
             ],
           },
         {

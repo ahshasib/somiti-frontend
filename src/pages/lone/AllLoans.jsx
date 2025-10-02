@@ -42,7 +42,7 @@ const AllLoans = () => {
                 <td className="border px-4 py-2">
                   {new Date(loan.loanDate).toLocaleDateString()}
                 </td>
-                <td className="border px-4 py-2">{loan.memberName}</td>
+                <td className="border px-4 py-2">{loan.name}</td>
                 <td className="border px-4 py-2">
                   Amount: {loan.loanAmount} <br />
                   Dividend: {loan.dividend} {loan.dividendType} <br />
