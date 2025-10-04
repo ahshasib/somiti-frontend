@@ -16,6 +16,7 @@ import CloseLoansPage from '../pages/lone/CloseLoansPage';
 import LoanApplicationForm from '../pages/lone/LoanApplicationForm';
 import MembersPage from '../pages/members/MembersPage';
 import MemberList from '../pages/members/MemberList';
+import DpsCalculator from '../pages/dps/DpsCalculator';
 
 
 
@@ -54,6 +55,7 @@ const router = createBrowserRouter(
             path: "/dashboard",
             element: <DashboardLayout />,
             children: [
+                //Loans
               { path: "/dashboard/loan-create", element: <LoanForm /> },
               { path: "/dashboard/loan-savings-collection", element: <LoanSavingCollectionForm /> },
               { path: "/dashboard/all-loans", element: <AllLoans /> },
@@ -67,7 +69,8 @@ const router = createBrowserRouter(
               { path: "/dashboard/member-create", element: <CreateMember /> },
               { path: "/dashboard/member-info", element: <MembersPage /> },
               { path: "/dashboard/member-list", element: <MemberList /> },
-              
+              //DPS
+              { path: "/dashboard/dps-calculator", element: <DpsCalculator /> },
               
             ],
           },

@@ -127,7 +127,7 @@ const LoanForm = () => {
           </select>
           <button
             type="button"
-            onClick={() => navigate("/add-member")}
+            onClick={() => navigate("/dashboard/member-create")}
             className="bg-green-500 text-white px-3 py-1 rounded text-sm"
           >
             +
