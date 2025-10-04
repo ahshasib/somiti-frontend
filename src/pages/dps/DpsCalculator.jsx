@@ -1,30 +1,32 @@
 import React, { useState } from "react";
 
 const DpsCalculator = () => {
-  const [monthlyDeposit, setMonthlyDeposit] = useState("");
-  const [months, setMonths] = useState("");
+  const [duration, setDuration] = useState("");
+  const [monthlyAmount, setMonthlyAmount] = useState("");
   const [interestRate, setInterestRate] = useState("");
-  const [result, setResult] = useState(null);
+  const [result, setResult] = useState({
+    totalDeposit: 0,
+    profit: 0,
+    totalWithProfit: 0,
+  });
 
-  const calculateDPS = (e) => {
+  const handleCalculate = (e) => {
     e.preventDefault();
 
-    // ইনপুটগুলোকে সংখ্যায় রূপান্তর
-    const P = parseFloat(monthlyDeposit);
-    const n = parseInt(months);
+    const P = parseFloat(monthlyAmount);
+    const n = parseInt(duration);
     const r = parseFloat(interestRate) / 100 / 12; // মাসিক সুদের হার
 
-    // মোট জমা অর্থ
     const totalDeposit = P * n;
+    const maturityAmount =
+      r > 0 ? P * ((Math.pow(1 + r, n) - 1) / r) : totalDeposit;
 
-    // সাধারণ DPS maturity ফর্মুলা:
-    // M = P * [(1 + r)^n - 1] / r
-    const maturityAmount = r > 0 ? P * ((Math.pow(1 + r, n) - 1) / r) : totalDeposit;
+    const profit = maturityAmount - totalDeposit;
 
     setResult({
       totalDeposit: totalDeposit.toFixed(2),
-      maturityAmount: maturityAmount.toFixed(2),
-      profit: (maturityAmount - totalDeposit).toFixed(2),
+      profit: profit.toFixed(2),
+      totalWithProfit: maturityAmount.toFixed(2),
     });
   };
 
@@ -35,44 +37,59 @@ const DpsCalculator = () => {
           🧮 DPS ক্যালকুলেটর
         </h2>
 
-        <form onSubmit={calculateDPS} className="space-y-5">
+        <form onSubmit={handleCalculate} className="space-y-5">
+          {/* সময়কাল */}
           <div>
             <label className="block text-gray-700 font-medium mb-1">
-              মাসিক জমার পরিমাণ (৳)
+              DPS সময়কাল (মাস)
             </label>
-            <input
-              type="number"
-              value={monthlyDeposit}
-              onChange={(e) => setMonthlyDeposit(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400"
-              placeholder="যেমন: 1000"
+            <select
+              value={duration}
+              onChange={(e) => setDuration(e.target.value)}
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-400"
               required
-            />
+            >
+              <option value="">একটি নির্বাচন করুন</option>
+              <option value="6">৬ মাস</option>
+              <option value="12">১ বছর</option>
+              <option value="24">২ বছর</option>
+              <option value="36">৩ বছর</option>
+              <option value="60">৫ বছর</option>
+            </select>
           </div>
 
+          {/* মাসিক কিস্তির টাকাঃ */}
           <div>
             <label className="block text-gray-700 font-medium mb-1">
-              মেয়াদ (মাস)
+              মাসিক কিস্তির টাকাঃ
             </label>
-            <input
-              type="number"
-              value={months}
-              onChange={(e) => setMonths(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400"
-              placeholder="যেমন: 36"
+            <select
+              value={monthlyAmount}
+              onChange={(e) => setMonthlyAmount(e.target.value)}
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-400"
               required
-            />
+            >
+              <option value="">একটি নির্বাচন করুন</option>
+              <option value="50">৳50</option>
+              <option value="100">৳100</option>
+              <option value="200">৳200</option>
+              <option value="500">৳500</option>
+              <option value="1000">৳1000</option>
+              <option value="2000">৳2000</option>
+              <option value="5000">৳5000</option>
+            </select>
           </div>
 
+          {/* লভ্যাংশ */}
           <div>
             <label className="block text-gray-700 font-medium mb-1">
-              সুদের হার (% প্রতি বছর)
+              লভ্যাংশ (%)
             </label>
             <input
               type="number"
               value={interestRate}
               onChange={(e) => setInterestRate(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-400"
               placeholder="যেমন: 8"
               required
             />
@@ -86,18 +103,21 @@ const DpsCalculator = () => {
           </button>
         </form>
 
-        {result && (
-          <div className="mt-8 bg-indigo-50 border border-indigo-200 rounded-lg p-5">
-            <h3 className="text-lg font-semibold text-indigo-700 mb-3">
-              📊 হিসাবের ফলাফল
-            </h3>
-            <p className="text-gray-700">মোট জমা: ৳{result.totalDeposit}</p>
-            <p className="text-gray-700">লভ্যাংশ (প্রায়): ৳{result.profit}</p>
-            <p className="text-gray-800 font-bold">
-              মেয়াদ শেষে পাবেন: ৳{result.maturityAmount}
-            </p>
-          </div>
-        )}
+        {/* হিসাবের ফলাফল */}
+        <div className="mt-8 bg-indigo-50 border border-indigo-200 rounded-lg p-5 space-y-2">
+          <h3 className="text-lg font-semibold text-indigo-700 mb-3">
+            📊 হিসাবের ফলাফল
+          </h3>
+          <p className="text-gray-700">
+            টার্গেট টাকাঃ <span className="font-semibold">৳{result.totalDeposit}</span>
+          </p>
+          <p className="text-gray-700">
+            প্রফিটঃ <span className="font-semibold">৳{result.profit}</span>
+          </p>
+          <p className="text-gray-800 font-bold">
+            মোট টাকা (প্রফিটসহ): ৳{result.totalWithProfit}
+          </p>
+        </div>
       </div>
     </div>
   );

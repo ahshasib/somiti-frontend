@@ -17,6 +17,7 @@ import LoanApplicationForm from '../pages/lone/LoanApplicationForm';
 import MembersPage from '../pages/members/MembersPage';
 import MemberList from '../pages/members/MemberList';
 import DpsCalculator from '../pages/dps/DpsCalculator';
+import DpsSchemeCreate from '../pages/dps/DpsSchemeCreate';
 
 
 
@@ -70,6 +71,8 @@ const router = createBrowserRouter(
               { path: "/dashboard/member-info", element: <MembersPage /> },
               { path: "/dashboard/member-list", element: <MemberList /> },
               //DPS
+              { path: "/dashboard/dps-calculator", element: <DpsCalculator /> },
+              { path: "/dashboard/dps-scheme-create", element: <DpsSchemeCreate /> },
               { path: "/dashboard/dps-calculator", element: <DpsCalculator /> },
               
             ],
