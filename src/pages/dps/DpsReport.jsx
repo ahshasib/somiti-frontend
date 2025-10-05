@@ -4,6 +4,7 @@ import axios from "axios";
 const DpsReport = () => {
   const [report, setReport] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selected, setSelected] = useState(null); // ✅ popup-এর জন্য
 
   const fetchReport = async () => {
     try {
@@ -37,6 +38,7 @@ const DpsReport = () => {
               <th className="p-3 text-left">মাসিক কিস্তি</th>
               <th className="p-3 text-left">কিস্তির সংখ্যা</th>
               <th className="p-3 text-left">মোট টাকা</th>
+              <th className="p-3 text-left">বিস্তারিত</th>
             </tr>
           </thead>
           <tbody>
@@ -50,11 +52,19 @@ const DpsReport = () => {
                   <td className="p-3">৳{item.monthlyAmount}</td>
                   <td className="p-3">{item.totalInstallments}</td>
                   <td className="p-3 font-semibold text-green-600">৳{item.totalAmount}</td>
+                  <td className="p-3">
+                    <button
+                      onClick={() => setSelected(item)}
+                      className="bg-indigo-500 text-white px-3 py-1 rounded hover:bg-indigo-600"
+                    >
+                      বিস্তারিত
+                    </button>
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="7" className="p-3 text-center text-gray-500">
+                <td colSpan="8" className="p-3 text-center text-gray-500">
                   কোনো লেনদেন পাওয়া যায়নি।
                 </td>
               </tr>
@@ -62,6 +72,50 @@ const DpsReport = () => {
           </tbody>
         </table>
       </div>
+
+      {/* ✅ Popup modal */}
+      {selected && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-2xl relative">
+            <button
+              className="absolute top-2 right-3 text-gray-600 hover:text-black text-xl"
+              onClick={() => setSelected(null)}
+            >
+              ✕
+            </button>
+
+            <h2 className="text-xl font-bold mb-3">
+              {selected.memberName} ({selected.schemeName})
+            </h2>
+            <p className="mb-4 text-gray-600">মোবাইল: {selected.phone}</p>
+
+            <table className="w-full text-sm border">
+              <thead className="bg-indigo-50">
+                <tr>
+                  <th className="p-2 text-left">তারিখ</th>
+                  <th className="p-2 text-left">পরিমাণ (৳)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {selected.collections.length > 0 ? (
+                  selected.collections.map((col, index) => (
+                    <tr key={index} className="border-b">
+                      <td className="p-2">{new Date(col.date).toLocaleDateString("bn-BD")}</td>
+                      <td className="p-2">৳{col.collectedAmount || col.amount}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="2" className="p-3 text-center text-gray-500">
+                      কোনো কালেকশন পাওয়া যায়নি।
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
