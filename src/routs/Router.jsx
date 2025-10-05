@@ -22,6 +22,9 @@ import AllDpsSchemes from '../pages/dps/AllDpsSchemes';
 import DpsSettingPage from '../pages/dps/DpsSettingPage';
 import DpsCollectionPage from '../pages/dps/DpsCollectionPage';
 import AllDpsCollections from '../pages/dps/AllDpsCollections';
+import DpsManagement from '../pages/dps/DpsManagement';
+import TodaysDps from '../pages/dps/TodaysDps';
+import DailyDpsReport from '../pages/dps/DailyDpsReport';
 
 
 
@@ -81,6 +84,9 @@ const router = createBrowserRouter(
               { path: "/dashboard/dps-scheme-settings", element: <DpsSettingPage /> },
               { path: "/dashboard/dps-collection", element: <DpsCollectionPage /> },
               { path: "/dashboard/all-dps-collection", element: <AllDpsCollections /> },
+              { path: "/dashboard/dps-management", element: <DpsManagement /> },
+              { path: "/dashboard/dps-today", element: <TodaysDps /> },
+              { path: "/dashboard/dps-daily-collection-report", element: <DailyDpsReport /> },
               
             ],
           },
