@@ -27,6 +27,7 @@ import TodaysDps from '../pages/dps/TodaysDps';
 import DailyDpsReport from '../pages/dps/DailyDpsReport';
 import DpsReport from '../pages/dps/DpsReport';
 import FdrCalculator from '../pages/fdr/FdrCalculator';
+import FdrCreate from '../pages/fdr/FdrCreate';
 
 
 
@@ -92,6 +93,7 @@ const router = createBrowserRouter(
               { path: "/dashboard/dps-member-report", element: <DpsReport /> },
               //FDR
               { path: "/dashboard/fdr-calculator", element: <FdrCalculator/> },
+              { path: "/dashboard/fdr-scheme-create", element: <FdrCreate/> },
               
             ],
           },
