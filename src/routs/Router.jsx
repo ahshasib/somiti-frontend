@@ -25,6 +25,7 @@ import AllDpsCollections from '../pages/dps/AllDpsCollections';
 import DpsManagement from '../pages/dps/DpsManagement';
 import TodaysDps from '../pages/dps/TodaysDps';
 import DailyDpsReport from '../pages/dps/DailyDpsReport';
+import DpsReport from '../pages/dps/DpsReport';
 
 
 
@@ -87,6 +88,7 @@ const router = createBrowserRouter(
               { path: "/dashboard/dps-management", element: <DpsManagement /> },
               { path: "/dashboard/dps-today", element: <TodaysDps /> },
               { path: "/dashboard/dps-daily-collection-report", element: <DailyDpsReport /> },
+              { path: "/dashboard/dps-member-report", element: <DpsReport /> },
               
             ],
           },
