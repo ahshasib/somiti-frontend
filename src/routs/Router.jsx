@@ -30,6 +30,7 @@ import FdrCalculator from '../pages/fdr/FdrCalculator';
 import FdrCreate from '../pages/fdr/FdrCreate';
 import FdrSettingForm from '../pages/fdr/FdrSettingForm';
 import FdrCollectionReport from '../pages/fdr/FdrCollectionReport';
+import FdrManagement from '../pages/fdr/FdrManagement';
 
 
 
@@ -98,6 +99,7 @@ const router = createBrowserRouter(
               { path: "/dashboard/fdr-scheme-create", element: <FdrCreate /> },
               { path: "/dashboard/fdr-settings", element: <FdrSettingForm /> },
               { path: "/dashboard/all-fdr", element: <FdrCollectionReport/> },
+              { path: "/dashboard/fdr-management", element: <FdrManagement/> },
               
             ],
           },
