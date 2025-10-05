@@ -31,6 +31,8 @@ import FdrCreate from '../pages/fdr/FdrCreate';
 import FdrSettingForm from '../pages/fdr/FdrSettingForm';
 import FdrCollectionReport from '../pages/fdr/FdrCollectionReport';
 import FdrManagement from '../pages/fdr/FdrManagement';
+import TodaysFdrReport from '../pages/fdr/TodaysFdrReport';
+import FdrTransactionReport from '../pages/fdr/FdrTransactionReport';
 
 
 
@@ -100,6 +102,8 @@ const router = createBrowserRouter(
               { path: "/dashboard/fdr-settings", element: <FdrSettingForm /> },
               { path: "/dashboard/all-fdr", element: <FdrCollectionReport/> },
               { path: "/dashboard/fdr-management", element: <FdrManagement/> },
+              { path: "/dashboard/fdr-collection-report", element: <TodaysFdrReport /> },
+              { path: "/dashboard/fdr-deposit-withdraw-report", element: <FdrTransactionReport /> },
               
             ],
           },

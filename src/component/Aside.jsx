@@ -60,7 +60,7 @@ const menuCategories = [
         { name: "সকল FDR কালেকশন", path: "/dashboard/all-fdr", icon: <MdOutlinePayments /> },
         { name: "FDR ব্যবস্থাপনা", path: "/dashboard/fdr-management", icon: <FaChartPie /> },
         { name: "FDR কালেকশন রিপোর্ট", path: "/dashboard/fdr-collection-report", icon: <FaFileAlt /> },
-        { name: "FDR উত্তোলন রিপোর্ট", path: "/dashboard/fdr-withdraw-report", icon: <FaFileAlt /> },
+        // { name: "FDR উত্তোলন রিপোর্ট", path: "/dashboard/fdr-withdraw-report", icon: <FaFileAlt /> },
         { name: "FDR জমা এবং উত্তোলন রিপোর্ট", path: "/dashboard/fdr-deposit-withdraw-report", icon: <FaFileAlt /> },
         // { name: "FDR প্রদানক্রিত লাভ রিপোর্ট", path: "/dashboard/fdr-profit-report", icon: <FaCoins /> },
         // { name: "সার্ভিস চার্জ কর্তন রিপোর্ট", path: "/dashboard/fdr-service-charge-report", icon: <FaCoins /> },
