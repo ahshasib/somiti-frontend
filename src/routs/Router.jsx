@@ -20,6 +20,8 @@ import DpsCalculator from '../pages/dps/DpsCalculator';
 import DpsSchemeCreate from '../pages/dps/DpsSchemeCreate';
 import AllDpsSchemes from '../pages/dps/AllDpsSchemes';
 import DpsSettingPage from '../pages/dps/DpsSettingPage';
+import DpsCollectionPage from '../pages/dps/DpsCollectionPage';
+import AllDpsCollections from '../pages/dps/AllDpsCollections';
 
 
 
@@ -77,7 +79,8 @@ const router = createBrowserRouter(
               { path: "/dashboard/dps-scheme-create", element: <DpsSchemeCreate /> },
               { path: "/dashboard/all-dps-schemes", element: <AllDpsSchemes /> },
               { path: "/dashboard/dps-scheme-settings", element: <DpsSettingPage /> },
-              { path: "/dashboard/all-dps-schemes", element: <AllDpsSchemes /> },
+              { path: "/dashboard/dps-collection", element: <DpsCollectionPage /> },
+              { path: "/dashboard/all-dps-collection", element: <AllDpsCollections /> },
               
             ],
           },
