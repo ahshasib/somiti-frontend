@@ -28,6 +28,8 @@ import DailyDpsReport from '../pages/dps/DailyDpsReport';
 import DpsReport from '../pages/dps/DpsReport';
 import FdrCalculator from '../pages/fdr/FdrCalculator';
 import FdrCreate from '../pages/fdr/FdrCreate';
+import FdrSettingForm from '../pages/fdr/FdrSettingForm';
+import FdrCollectionReport from '../pages/fdr/FdrCollectionReport';
 
 
 
@@ -92,8 +94,10 @@ const router = createBrowserRouter(
               { path: "/dashboard/dps-daily-collection-report", element: <DailyDpsReport /> },
               { path: "/dashboard/dps-member-report", element: <DpsReport /> },
               //FDR
-              { path: "/dashboard/fdr-calculator", element: <FdrCalculator/> },
-              { path: "/dashboard/fdr-scheme-create", element: <FdrCreate/> },
+              { path: "/dashboard/fdr-calculator", element: <FdrCalculator /> },
+              { path: "/dashboard/fdr-scheme-create", element: <FdrCreate /> },
+              { path: "/dashboard/fdr-settings", element: <FdrSettingForm /> },
+              { path: "/dashboard/all-fdr", element: <FdrCollectionReport/> },
               
             ],
           },
