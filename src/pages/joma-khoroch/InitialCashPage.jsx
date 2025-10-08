@@ -12,14 +12,14 @@ const InitialCashPage = () => {
   }, []);
 
   const fetchData = async () => {
-    const res = await axios.get("http://localhost:5000/api/initial-cash");
+    const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/initial-cash`);
     setCashData(res.data);
   };
 
   // যোগ/আপডেট করা
   const handleSave = async () => {
     if (!amount) return alert("টাকার পরিমাণ দিন");
-    const res = await axios.post("http://localhost:5000/api/initial-cash", {
+    const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/initial-cash`, {
       amount,
       description,
     });

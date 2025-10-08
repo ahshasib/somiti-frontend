@@ -35,6 +35,7 @@ import TodaysFdrReport from '../pages/fdr/TodaysFdrReport';
 import FdrTransactionReport from '../pages/fdr/FdrTransactionReport';
 import OtherIncomeExpensePage from '../pages/joma-khoroch/OtherIncomeExpensePage';
 import ExpenseCategoryPage from '../pages/joma-khoroch/ExpenseCategoryPage';
+import InitialCashPage from '../pages/joma-khoroch/InitialCashPage';
 
 
 
@@ -109,6 +110,7 @@ const router = createBrowserRouter(
                 //অন্যান্য আয়-ব্যয়ের খাত
               { path: "/dashboard/other-income-expense", element: <OtherIncomeExpensePage /> },
               { path: "/dashboard/expense-head-management", element: <ExpenseCategoryPage /> },
+              { path: "/dashboard/opening-cash", element: <InitialCashPage /> },
               
               
             ],

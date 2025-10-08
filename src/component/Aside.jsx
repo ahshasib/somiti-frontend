@@ -102,7 +102,7 @@ const menuCategories = [
       name: "সমিতি ব্যবস্থাপনা রিপোর্ট",
       icon: <FaChartPie />,
       subMenu: [
-        { name: "সার্ভিস চার্জ রিপোর্ট", path: "/dashboard/service-charge-report", icon: <FaFileAlt /> },
+        // { name: "সার্ভিস চার্জ রিপোর্ট", path: "/dashboard/service-charge-report", icon: <FaFileAlt /> },
         { name: "দৈনিক কালেকশন রিপোর্ট", path: "/dashboard/daily-collection-report", icon: <FaFileAlt /> },
         { name: "দৈনিক লেনদেন রিপোর্ট", path: "/dashboard/daily-transaction-report", icon: <FaFileAlt /> },
         { name: "দৈনিক প্রদান রিপোর্ট", path: "/dashboard/daily-payment-report", icon: <FaFileAlt /> },
