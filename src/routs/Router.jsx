@@ -36,6 +36,7 @@ import FdrTransactionReport from '../pages/fdr/FdrTransactionReport';
 import OtherIncomeExpensePage from '../pages/joma-khoroch/OtherIncomeExpensePage';
 import ExpenseCategoryPage from '../pages/joma-khoroch/ExpenseCategoryPage';
 import InitialCashPage from '../pages/joma-khoroch/InitialCashPage';
+import DailyCollectionReport from '../pages/somiti-maintain/DailyCollectionReport';
 
 
 
@@ -111,6 +112,8 @@ const router = createBrowserRouter(
               { path: "/dashboard/other-income-expense", element: <OtherIncomeExpensePage /> },
               { path: "/dashboard/expense-head-management", element: <ExpenseCategoryPage /> },
               { path: "/dashboard/opening-cash", element: <InitialCashPage /> },
+              //সমিতি ব্যবস্থাপনা রিপোর্ট
+              { path: "/dashboard/daily-collection-report", element: <DailyCollectionReport /> },
               
               
             ],
