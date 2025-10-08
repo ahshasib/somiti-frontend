@@ -34,6 +34,7 @@ import FdrManagement from '../pages/fdr/FdrManagement';
 import TodaysFdrReport from '../pages/fdr/TodaysFdrReport';
 import FdrTransactionReport from '../pages/fdr/FdrTransactionReport';
 import OtherIncomeExpensePage from '../pages/joma-khoroch/OtherIncomeExpensePage';
+import ExpenseCategoryPage from '../pages/joma-khoroch/ExpenseCategoryPage';
 
 
 
@@ -107,6 +108,8 @@ const router = createBrowserRouter(
               { path: "/dashboard/fdr-deposit-withdraw-report", element: <FdrTransactionReport /> },
                 //অন্যান্য আয়-ব্যয়ের খাত
               { path: "/dashboard/other-income-expense", element: <OtherIncomeExpensePage /> },
+              { path: "/dashboard/expense-head-management", element: <ExpenseCategoryPage /> },
+              
               
             ],
           },
