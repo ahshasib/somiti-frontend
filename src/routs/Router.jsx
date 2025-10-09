@@ -37,6 +37,7 @@ import OtherIncomeExpensePage from '../pages/joma-khoroch/OtherIncomeExpensePage
 import ExpenseCategoryPage from '../pages/joma-khoroch/ExpenseCategoryPage';
 import InitialCashPage from '../pages/joma-khoroch/InitialCashPage';
 import DailyCollectionReport from '../pages/somiti-maintain/DailyCollectionReport';
+import DailyTransactionReport from '../pages/somiti-maintain/DailyTransactionReport';
 
 
 
@@ -114,6 +115,7 @@ const router = createBrowserRouter(
               { path: "/dashboard/opening-cash", element: <InitialCashPage /> },
               //সমিতি ব্যবস্থাপনা রিপোর্ট
               { path: "/dashboard/daily-collection-report", element: <DailyCollectionReport /> },
+              { path: "/dashboard/daily-transaction-report", element: <DailyTransactionReport/> },
               
               
             ],
