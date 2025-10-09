@@ -1,14 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { FaCamera } from "react-icons/fa";
 
 const CreateMember = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-
-  // =======================
-  // Initial form state
-  // =======================
-  const initialState = {
+  const [formData, setFormData] = useState({
     date: new Date().toISOString().split("T")[0],
     name: "",
     mobileNumber: "",
@@ -22,31 +19,51 @@ const CreateMember = () => {
     nomineeRelation: "",
     password: "",
     status: "active",
-
-    // Image files
     memberFile: null,
     nomineeFile: null,
     nidFrontFile: null,
     nidBackFile: null,
-  };
+    nomineeNidFrontFile: null,
+    nomineeNidBackFile: null,
+  });
 
-  const [formData, setFormData] = useState(initialState);
+  const [fileNames, setFileNames] = useState({
+    memberFile: "",
+    nomineeFile: "",
+    nidFrontFile: "",
+    nidBackFile: "",
+    nomineeNidFrontFile: "",
+    nomineeNidBackFile: "",
+  });
 
-  // =======================
-  // Handle input change
-  // =======================
+  // ================= Auto-generate Member ID =================
+  useEffect(() => {
+    const generateMemberId = async () => {
+      try {
+        // Backend API call to get last member ID
+        const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/members/last`);
+        const lastId = res.data?.lastMemberId || "0000"; // যদি কোনো member না থাকে
+        const newIdNumber = String(parseInt(lastId) + 1).padStart(4, "0");
+        setFormData((prev) => ({ ...prev, memberId: newIdNumber }));
+      } catch (err) {
+        console.error("Member ID generate error:", err);
+        setFormData((prev) => ({ ...prev, memberId: "0001" }));
+      }
+    };
+    generateMemberId();
+  }, []);
+  // ============================================================
+
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
     if (type === "file") {
       setFormData({ ...formData, [name]: files[0] });
+      setFileNames({ ...fileNames, [name]: files[0]?.name || "" });
     } else {
       setFormData({ ...formData, [name]: value });
     }
   };
 
-  // =======================
-  // Upload image to imgbb
-  // =======================
   const uploadImage = async (file) => {
     if (!file) return "";
     const form = new FormData();
@@ -58,43 +75,29 @@ const CreateMember = () => {
     return res.data.data.url;
   };
 
-  // =======================
-  // Handle form submit
-  // =======================
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMessage("");
 
     try {
-      // Upload images
       const memberImage = await uploadImage(formData.memberFile);
       const nomineeImage = await uploadImage(formData.nomineeFile);
       const nidFront = await uploadImage(formData.nidFrontFile);
       const nidBack = await uploadImage(formData.nidBackFile);
+      const nomineeNidFront = await uploadImage(formData.nomineeNidFrontFile);
+      const nomineeNidBack = await uploadImage(formData.nomineeNidBackFile);
 
-      // Prepare data to send
       const dataToSend = {
-        date: formData.date,
-        name: formData.name,
-        mobileNumber: formData.mobileNumber,
-        memberId: formData.memberId,
-        address: formData.address,
-        nidNumber: formData.nidNumber,
-        fatherOrHusband: formData.fatherOrHusband,
-        guarantor: formData.guarantor,
-        nomineeName: formData.nomineeName,
-        nomineeMobile: formData.nomineeMobile,
-        nomineeRelation: formData.nomineeRelation,
-        password: formData.password,
-        status: formData.status,
+        ...formData,
         memberImage,
         nomineeImage,
         nidFront,
         nidBack,
+        nomineeNidFront,
+        nomineeNidBack,
       };
 
-      // Send to server
       const res = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/api/members`,
         dataToSend
@@ -102,7 +105,26 @@ const CreateMember = () => {
 
       if (res.data?.member) {
         setMessage("✅ সদস্য সফলভাবে তৈরি হয়েছে!");
-        setFormData(initialState);
+        setFormData({
+          ...formData,
+          memberFile: null,
+          nomineeFile: null,
+          nidFrontFile: null,
+          nidBackFile: null,
+          nomineeNidFrontFile: null,
+          nomineeNidBackFile: null,
+        });
+        setFileNames({
+          memberFile: "",
+          nomineeFile: "",
+          nidFrontFile: "",
+          nidBackFile: "",
+          nomineeNidFrontFile: "",
+          nomineeNidBackFile: "",
+        });
+        // নতুন member ID generate করা
+        const newIdNumber = String(parseInt(formData.memberId) + 1).padStart(4, "0");
+        setFormData((prev) => ({ ...prev, memberId: newIdNumber }));
       } else {
         setMessage("⚠️ কিছু সমস্যা হয়েছে, আবার চেষ্টা করুন।");
       }
@@ -114,9 +136,21 @@ const CreateMember = () => {
     }
   };
 
+  // ===== Image fields =====
+  const imageFields = [
+    { label: "সদস্য ছবি", name: "memberFile" },
+    { label: "নোমিনির ছবি", name: "nomineeFile" },
+    { label: "সদস্য NID সামনের অংশ", name: "nidFrontFile" },
+    { label: "সদস্য NID পিছনের অংশ", name: "nidBackFile" },
+    { label: "নোমিনীর NID সামনের অংশ", name: "nomineeNidFrontFile" },
+    { label: "নোমিনীর NID পিছনের অংশ", name: "nomineeNidBackFile" },
+  ];
+
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-md">
-      <h2 className="text-2xl font-bold mb-6">সদস্য তৈরী করুন</h2>
+    <div className="max-w-5xl mx-auto p-6 bg-white shadow-xl rounded-xl">
+      <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
+        সদস্য তৈরী করুন
+      </h2>
 
       {message && (
         <div
@@ -130,39 +164,58 @@ const CreateMember = () => {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {/* অন্যান্য ফিল্ড */}
-        <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="সদস্যর নাম" required className="border px-3 py-2 rounded w-full" />
-        <input type="text" name="mobileNumber" value={formData.mobileNumber} onChange={handleChange} placeholder="মোবাইল নম্বর" required className="border px-3 py-2 rounded w-full" />
-        <input type="text" name="memberId" value={formData.memberId} onChange={handleChange} placeholder="সদস্য ID" className="border px-3 py-2 rounded w-full" />
-        <input type="text" name="address" value={formData.address} onChange={handleChange} placeholder="ঠিকানা" className="border px-3 py-2 rounded w-full" />
-        <input type="text" name="nidNumber" value={formData.nidNumber} onChange={handleChange} placeholder="NID নম্বর" required className="border px-3 py-2 rounded w-full" />
-        <input type="text" name="fatherOrHusband" value={formData.fatherOrHusband} onChange={handleChange} placeholder="পিতা/স্বামী নাম" className="border px-3 py-2 rounded w-full" />
-        <input type="text" name="guarantor" value={formData.guarantor} onChange={handleChange} placeholder="জামানতকারীর তথ্য" className="border px-3 py-2 rounded w-full" />
-        <input type="text" name="nomineeName" value={formData.nomineeName} onChange={handleChange} placeholder="নোমিনীর নাম" className="border px-3 py-2 rounded w-full" />
-        <input type="text" name="nomineeMobile" value={formData.nomineeMobile} onChange={handleChange} placeholder="নোমিনীর মোবাইল" className="border px-3 py-2 rounded w-full" />
-        <input type="text" name="nomineeRelation" value={formData.nomineeRelation} onChange={handleChange} placeholder="নোমিনীর সম্পর্ক" className="border px-3 py-2 rounded w-full" />
-        <input type="password" name="password" value={formData.password} onChange={handleChange} placeholder="পাসওয়ার্ড" className="border px-3 py-2 rounded w-full" />
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {[ 
+            { label: "সদস্যর নাম", name: "name", type: "text" },
+            { label: "মোবাইল নম্বর", name: "mobileNumber", type: "text" },
+            { label: "সদস্য ID", name: "memberId", type: "text", readOnly: true },
+            { label: "ঠিকানা", name: "address", type: "text" },
+            { label: "NID নম্বর", name: "nidNumber", type: "text" },
+            { label: "পিতা/স্বামী নাম", name: "fatherOrHusband", type: "text" },
+            { label: "জামানতকারীর তথ্য", name: "guarantor", type: "text" },
+            { label: "নোমিনীর নাম", name: "nomineeName", type: "text" },
+            { label: "নোমিনীর মোবাইল", name: "nomineeMobile", type: "text" },
+            { label: "নোমিনীর সম্পর্ক", name: "nomineeRelation", type: "text" },
+            { label: "পাসওয়ার্ড", name: "password", type: "password" },
+          ].map((field, idx) => (
+            <div key={idx} className="flex flex-col md:flex-row items-start md:items-center gap-2">
+              <label className="md:w-40 font-medium text-gray-700">{field.label}:</label>
+              <input
+                type={field.type}
+                name={field.name}
+                value={formData[field.name]}
+                onChange={handleChange}
+                placeholder={field.label}
+                required={["name", "mobileNumber", "nidNumber"].includes(field.name)}
+                readOnly={field.readOnly || false}
+                className="flex-1 border px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full bg-gray-100"
+              />
+            </div>
+          ))}
+        </div>
 
-        {/* Image fields */}
-        <div>
-          <label>সদস্য ছবি</label>
-          <input type="file" name="memberFile" onChange={handleChange} className="border px-3 py-2 rounded w-full" />
-        </div>
-        <div>
-          <label>নোমিনির ছবি</label>
-          <input type="file" name="nomineeFile" onChange={handleChange} className="border px-3 py-2 rounded w-full" />
-        </div>
-        <div>
-          <label>NID সামনের অংশ</label>
-          <input type="file" name="nidFrontFile" onChange={handleChange} className="border px-3 py-2 rounded w-full" />
-        </div>
-        <div>
-          <label>NID পিছনের অংশ</label>
-          <input type="file" name="nidBackFile" onChange={handleChange} className="border px-3 py-2 rounded w-full" />
+        {/* Image Upload */}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+          {imageFields.map((img, idx) => (
+            <label
+              key={idx}
+              className="flex flex-col items-center justify-center border border-gray-300 rounded-lg h-32 w-32 cursor-pointer hover:bg-gray-50 transition relative"
+            >
+              <FaCamera className="text-gray-400 text-2xl mb-1" />
+              <span className="text-sm text-gray-500 text-center">
+                {fileNames[img.name] || img.label}
+              </span>
+              <input type="file" name={img.name} onChange={handleChange} className="hidden" />
+            </label>
+          ))}
         </div>
 
-        <button type="submit" disabled={loading} className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600">
+        <button
+          type="submit"
+          disabled={loading}
+          className="mt-6 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 w-full font-semibold"
+        >
           {loading ? "Saving..." : "Submit"}
         </button>
       </form>

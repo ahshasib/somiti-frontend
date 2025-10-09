@@ -38,6 +38,8 @@ import ExpenseCategoryPage from '../pages/joma-khoroch/ExpenseCategoryPage';
 import InitialCashPage from '../pages/joma-khoroch/InitialCashPage';
 import DailyCollectionReport from '../pages/somiti-maintain/DailyCollectionReport';
 import DailyTransactionReport from '../pages/somiti-maintain/DailyTransactionReport';
+import MembersBalanceReport from '../pages/somiti-maintain/MembersBalanceReport';
+import InstallmentProfitReport from '../pages/somiti-maintain/InstallmentProfitReport';
 
 
 
@@ -116,6 +118,8 @@ const router = createBrowserRouter(
               //সমিতি ব্যবস্থাপনা রিপোর্ট
               { path: "/dashboard/daily-collection-report", element: <DailyCollectionReport /> },
               { path: "/dashboard/daily-transaction-report", element: <DailyTransactionReport/> },
+              { path: "/dashboard/member-balance-report", element: <MembersBalanceReport/> },
+              { path: "/dashboard/dividend-report", element: <InstallmentProfitReport/> },
               
               
             ],
