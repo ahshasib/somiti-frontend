@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const LoanForm = () => {
   const [members, setMembers] = useState([]); // সব সদস্যের লিস্ট
@@ -83,8 +84,17 @@ const LoanForm = () => {
 
     try {
       const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/loans`, loanData);
-      console.log("Server Response:", res.data);
-      alert("Loan Saved Successfully!");
+    
+      // ✅ Success alert with member name
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: `Loan saved successfully for ${loanData.name}!`,
+        showConfirmButton: false,
+        timer: 1500
+      });
+    
+    
     } catch (err) {
       console.error(err);
       alert("Error saving loan data");
