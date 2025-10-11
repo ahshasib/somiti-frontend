@@ -40,6 +40,10 @@ import DailyCollectionReport from '../pages/somiti-maintain/DailyCollectionRepor
 import DailyTransactionReport from '../pages/somiti-maintain/DailyTransactionReport';
 import MembersBalanceReport from '../pages/somiti-maintain/MembersBalanceReport';
 import InstallmentProfitReport from '../pages/somiti-maintain/InstallmentProfitReport';
+import PrivateRoute from '../privetRoute/PrivateRoute';
+import Login from '../pages/login/Login';
+import RoleBasedRoute from '../privetRoute/RoleBasedRoute';
+import DashboardHome from '../component/DashboardHome';
 
 
 
@@ -55,71 +59,65 @@ const router = createBrowserRouter(
                 index: true, 
                 element: <Home /> 
             },
-            // {
-            //     path:"/login",
-            //     element:<Login></Login>
-            // },
-            // {
-            //     path:"/register",
-            //     element:<Register></Register>
-            // },
-            // {
-            //     path:"/blog",
-            //     element:<BlogPage></BlogPage>
-            // },
-            // {
-            //     path:"/members",
-            //     element:<MemberInfo></MemberInfo>
-            // },
             
             ]
         },
         {
+          path:"/login",
+          element:<Login></Login>
+
+        },
+        {
             path: "/dashboard",
-            element: <DashboardLayout />,
+            element: (
+              <PrivateRoute>
+              <DashboardLayout />
+              </PrivateRoute>
+            ),
             children: [
+              { index: true, element: <DashboardHome /> },
                 //Loans
-              { path: "/dashboard/loan-create", element: <LoanForm /> },
-              { path: "/dashboard/loan-savings-collection", element: <LoanSavingCollectionForm /> },
-              { path: "/dashboard/all-loans", element: <AllLoans /> },
-              { path: "/dashboard/loan-installment-collection", element: <LoanCollection /> },
-              { path: "/dashboard/all-loan-installments", element: <LoansCollectionPage /> },
-              { path: "/dashboard/today-installment", element: <TodayInstallments /> },
-              { path: "/dashboard/expire", element: <OverdueInstallments /> },
-              { path: "/dashboard/close-loan", element: <CloseLoansPage/> },
-              { path: "/dashboard/loan-application", element: <LoanApplicationForm/> },
+              { path: "/dashboard/loan-create", element: (<RoleBasedRoute allowedRoles={["admin"]}><LoanForm /></RoleBasedRoute>) },
+              { path: "/dashboard/loan-savings-collection", element: (<RoleBasedRoute allowedRoles={["admin",]}><LoanSavingCollectionForm /></RoleBasedRoute>) },
+              { path: "/dashboard/all-loans", element:  (<RoleBasedRoute allowedRoles={["admin"]}><AllLoans /></RoleBasedRoute>)},
+              { path: "/dashboard/loan-installment-collection", element:  (<RoleBasedRoute allowedRoles={["admin","agent"]}><LoanCollection /></RoleBasedRoute>)},
+              { path: "/dashboard/all-loan-installments", element:  (<RoleBasedRoute allowedRoles={["admin"]}><LoansCollectionPage /></RoleBasedRoute>)},
+              { path: "/dashboard/today-installment", element:  (<RoleBasedRoute allowedRoles={["admin","agent"]}><TodayInstallments /></RoleBasedRoute>)},
+              { path: "/dashboard/expire", element:  (<RoleBasedRoute allowedRoles={["admin","agent"]}><OverdueInstallments /></RoleBasedRoute>)},
+              { path: "/dashboard/close-loan", element: (<RoleBasedRoute allowedRoles={["admin"]}><CloseLoansPage/> </RoleBasedRoute>)},
+              { path: "/dashboard/loan-application", element:  (<RoleBasedRoute allowedRoles={["admin"]}><LoanApplicationForm/></RoleBasedRoute>)},
               //members
-              { path: "/dashboard/member-create", element: <CreateMember /> },
-              { path: "/dashboard/member-info", element: <MembersPage /> },
-              { path: "/dashboard/member-list", element: <MemberList /> },
+              { path: "/dashboard/member-create", element:  (<RoleBasedRoute allowedRoles={["admin"]}><CreateMember /></RoleBasedRoute>)},
+              { path: "/dashboard/member-info", element:  (<RoleBasedRoute allowedRoles={["admin"]}><MembersPage /></RoleBasedRoute>)},
+              { path: "/dashboard/member-list", element:  (<RoleBasedRoute allowedRoles={["admin","member","agent"]}><MemberList /></RoleBasedRoute>)},
               //DPS
-              { path: "/dashboard/dps-calculator", element: <DpsCalculator /> },
-              { path: "/dashboard/dps-scheme-create", element: <DpsSchemeCreate /> },
-              { path: "/dashboard/all-dps-schemes", element: <AllDpsSchemes /> },
-              { path: "/dashboard/dps-scheme-settings", element: <DpsSettingPage /> },
-              { path: "/dashboard/dps-collection", element: <DpsCollectionPage /> },
-              { path: "/dashboard/all-dps-collection", element: <AllDpsCollections /> },
-              { path: "/dashboard/dps-management", element: <DpsManagement /> },
-              { path: "/dashboard/dps-today", element: <TodaysDps /> },
-              { path: "/dashboard/dps-daily-collection-report", element: <DailyDpsReport /> },
-              { path: "/dashboard/dps-member-report", element: <DpsReport /> },
+              { path: "/dashboard/dps-calculator", element:  (<RoleBasedRoute allowedRoles={["admin","member","agent"]}><DpsCalculator /></RoleBasedRoute>)},
+              { path: "/dashboard/dps-scheme-create", element:  (<RoleBasedRoute allowedRoles={["admin"]}><DpsSchemeCreate /></RoleBasedRoute>)},
+              { path: "/dashboard/all-dps-schemes", element:  (<RoleBasedRoute allowedRoles={["admin","agent"]}><AllDpsSchemes /></RoleBasedRoute>)},
+              { path: "/dashboard/dps-scheme-settings", element:  (<RoleBasedRoute allowedRoles={["admin"]}><DpsSettingPage /></RoleBasedRoute>)},
+              { path: "/dashboard/dps-collection", element:  (<RoleBasedRoute allowedRoles={["admin","agent"]}><DpsCollectionPage /></RoleBasedRoute>)},
+              { path: "/dashboard/all-dps-collection", element:  (<RoleBasedRoute allowedRoles={["admin","agent"]}><AllDpsCollections /></RoleBasedRoute>)},
+              { path: "/dashboard/dps-management", element:  (<RoleBasedRoute allowedRoles={["admin"]}><DpsManagement /></RoleBasedRoute>)},
+              { path: "/dashboard/dps-today", element:  (<RoleBasedRoute allowedRoles={["admin"]}><TodaysDps /></RoleBasedRoute>)},
+              { path: "/dashboard/dps-daily-collection-report", element:  (<RoleBasedRoute allowedRoles={["admin"]}><DailyDpsReport /></RoleBasedRoute>)},
+              { path: "/dashboard/dps-member-report", element:  (<RoleBasedRoute allowedRoles={["admin"]}><DpsReport /></RoleBasedRoute>)},
               //FDR
-              { path: "/dashboard/fdr-calculator", element: <FdrCalculator /> },
-              { path: "/dashboard/fdr-scheme-create", element: <FdrCreate /> },
-              { path: "/dashboard/fdr-settings", element: <FdrSettingForm /> },
-              { path: "/dashboard/all-fdr", element: <FdrCollectionReport/> },
-              { path: "/dashboard/fdr-management", element: <FdrManagement/> },
-              { path: "/dashboard/fdr-collection-report", element: <TodaysFdrReport /> },
-              { path: "/dashboard/fdr-deposit-withdraw-report", element: <FdrTransactionReport /> },
+              { path: "/dashboard/fdr-calculator", element:  (<RoleBasedRoute allowedRoles={["admin","member"]}><FdrCalculator /></RoleBasedRoute>)},
+              { path: "/dashboard/fdr-scheme-create", element:  (<RoleBasedRoute allowedRoles={["admin"]}><FdrCreate /></RoleBasedRoute>)},
+              { path: "/dashboard/fdr-settings", element:  (<RoleBasedRoute allowedRoles={["admin"]}><FdrSettingForm /></RoleBasedRoute>)},
+              { path: "/dashboard/all-fdr", element:  (<RoleBasedRoute allowedRoles={["admin"]}><FdrCollectionReport/></RoleBasedRoute>)},
+              { path: "/dashboard/fdr-management", element:  (<RoleBasedRoute allowedRoles={["admin"]}><FdrManagement/></RoleBasedRoute>)},
+              { path: "/dashboard/fdr-collection-report", element:  (<RoleBasedRoute allowedRoles={["admin"]}><TodaysFdrReport /></RoleBasedRoute>)},
+              { path: "/dashboard/fdr-deposit-withdraw-report", element:  (<RoleBasedRoute allowedRoles={["admin"]}><FdrTransactionReport /></RoleBasedRoute>)},
                 //অন্যান্য আয়-ব্যয়ের খাত
-              { path: "/dashboard/other-income-expense", element: <OtherIncomeExpensePage /> },
-              { path: "/dashboard/expense-head-management", element: <ExpenseCategoryPage /> },
-              { path: "/dashboard/opening-cash", element: <InitialCashPage /> },
+              { path: "/dashboard/other-income-expense", element:  (<RoleBasedRoute allowedRoles={["admin"]}><OtherIncomeExpensePage /></RoleBasedRoute>)},
+              { path: "/dashboard/expense-head-management", element:  (<RoleBasedRoute allowedRoles={["admin"]}><ExpenseCategoryPage /></RoleBasedRoute>)},
+              { path: "/dashboard/opening-cash", element:  (<RoleBasedRoute allowedRoles={["admin"]}><InitialCashPage /></RoleBasedRoute>)},
               //সমিতি ব্যবস্থাপনা রিপোর্ট
-              { path: "/dashboard/daily-collection-report", element: <DailyCollectionReport /> },
-              { path: "/dashboard/daily-transaction-report", element: <DailyTransactionReport/> },
-              { path: "/dashboard/member-balance-report", element: <MembersBalanceReport/> },
-              { path: "/dashboard/dividend-report", element: <InstallmentProfitReport/> },
+              { path: "/dashboard/daily-collection-report", element:  (<RoleBasedRoute allowedRoles={["admin"]}><DailyCollectionReport /></RoleBasedRoute>)},
+              { path: "/dashboard/daily-transaction-report", element:  (<RoleBasedRoute allowedRoles={["admin"]}><DailyTransactionReport/></RoleBasedRoute>)},
+              { path: "/dashboard/member-balance-report", element:  (<RoleBasedRoute allowedRoles={["admin"]}><MembersBalanceReport/></RoleBasedRoute>)},
+              { path: "/dashboard/dividend-report", element:  (<RoleBasedRoute allowedRoles={["admin"]}><InstallmentProfitReport/></RoleBasedRoute>)},
               
               
             ],

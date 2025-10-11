@@ -34,7 +34,7 @@ const menuCategories = [
       ],
     },
     {
-      name: "লোন / লোন ব্যবস্থাপনা",
+      name: "লোন ব্যবস্থাপনা",
       icon: <FaWallet />,
       subMenu: [
         // { name: "", path: "/dashboard/loan-management", icon: <FaRegMoneyBillAlt /> },
@@ -119,56 +119,91 @@ const menuCategories = [
       ],
     },
   ];
-
-const Aside = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+const Aside = ({ isOpen, onClose }) => {
   const [openIndex, setOpenIndex] = useState(null);
 
   const toggleMenu = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
-
+  
   return (
-    <aside className="w-1/5 min-h-screen bg-gradient-to-b from-indigo-100 via-purple-100 to-pink-50 border-r border-gray-200 p-6">
-    <Link to="/">
-      <h2 className="text-xl md:text-2xl font-bold border-b border-gray-300 pb-5 text-gray-800 mb-6 flex items-center gap-5">
-        <FaArrowLeft /> হোমপেজ
-      </h2>
-    </Link>
-  
-    <ul className="space-y-2">
-      {menuCategories.map((category, idx) => (
-        <li key={idx}>
-          <button
-            onClick={() => toggleMenu(idx)}
-            className="w-full flex justify-between items-center px-4 py-2 rounded-lg text-gray-700 font-medium hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-500 hover:text-white transition-all duration-300"
-          >
-            <span className="flex items-center gap-2">
-              {category.icon} {/* Category icon */}
-              {category.name}
-            </span>
-            {openIndex === idx ? <FaChevronUp /> : <FaChevronDown />}
-          </button>
-  
-          {openIndex === idx && (
-            <ul className="ml-4 mt-2 space-y-1">
-              {category.subMenu.map((item, subIdx) => (
-                <li key={subIdx}>
-                  <NavLink
-                    to={item.path}
-                    className="flex items-center gap-2 px-4 py-2 rounded-lg text-gray-600 hover:bg-indigo-200 hover:text-gray-900 transition-all duration-200"
-                  >
-                    {item.icon} {/* Sub-menu icon */}
-                    {item.name}
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-          )}
-        </li>
-      ))}
-    </ul>
-  </aside>
-  
+    <>
+      {/* Overlay for mobile */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={onClose}
+        />
+      )}
+
+      {/* Sidebar */}
+      <aside
+  className={`
+    fixed lg:relative z-50 w-64 mt-16 lg:mt-0 h-full lg:h-auto bg-gradient-to-b from-gray-200 via-gray-100 to-gray-200 border-r border-gray-200 p-6
+    transform transition-transform duration-300
+    ${isOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0
+    overflow-y-auto
+  `}
+>
+   {/* Home link */}
+   <Link to="/" onClick={onClose} className="mb-6 block">
+    <h2 className="text-lg md:text-xl font-bold border-b border-gray-300 pb-5 text-gray-800 flex items-center gap-5">
+      <FaArrowLeft /> হোমপেজ
+    </h2>
+  </Link>
+
+  {/* Profile Section */}
+  <div className="flex flex-col items-center mb-6 p-4 bg-white rounded-2xl shadow-md">
+  <img
+    src={user?.img || "/default-profile.jpg"} // যদি user.image না থাকে default image
+    alt="Profile"
+    className="w-20 h-20 rounded-full mb-3 border-2 border-indigo-500"
+  />
+  <h3 className="text-lg font-semibold text-gray-800">{user?.name || "Unknown User"}</h3>
+  <p className="text-sm text-gray-500">Role: {user?.role || "-"}</p>
+  <p className="text-sm text-gray-500">ID: {user?._id || "-"}</p>
+  <p className="text-sm text-gray-500">Phone: {user?.mobileNumber || "-"}</p>
+</div>
+
+ 
+  {/* Menu */}
+  <ul className="space-y-3">
+    {menuCategories.map((category, idx) => (
+      <li key={idx}>
+        <button
+          onClick={() => toggleMenu(idx)}
+          className="w-full flex justify-between items-center px-3 py-4 text-gray-800 font-semibold text-sm hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-600 hover:text-white transition-all duration-300 border-b border-gray-200"
+        >
+          <span className="flex items-center gap-3">
+            <span className="text-lg text-indigo-600">{category.icon}</span>
+            {category.name}
+          </span>
+          <span className="text-gray-500">{openIndex === idx ? <FaChevronUp /> : <FaChevronDown />}</span>
+        </button>
+
+        {openIndex === idx && (
+          <ul className="ml-4 mt-2 space-y-1">
+            {category.subMenu.map((item, subIdx) => (
+              <li key={subIdx}>
+                <NavLink
+                  to={item.path}
+                  className="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 text-sm font-medium hover:bg-indigo-200 hover:text-gray-900 transition-all duration-200"
+                  onClick={onClose}
+                >
+                  <span className="text-indigo-600">{item.icon}</span>
+                  {item.name}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        )}
+      </li>
+    ))}
+  </ul>
+</aside>
+
+    </>
   );
 };
 

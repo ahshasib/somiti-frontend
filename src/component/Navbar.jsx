@@ -1,7 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router'
+import LogoutButton from './LogoutButton';
 
 const Navbar = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+
   return (
     <div className=' bg-gradient-to-r from-indigo-50 to-purple-50 shadow-xl'>
         <div class="navbar w-11/12 mx-auto">
@@ -13,30 +16,25 @@ const Navbar = () => {
       <ul
         tabindex="0"
         class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-        <li><a>Item 1</a></li>
-        <li>
-          <a>Parent</a>
-          <ul class="p-2">
-            <li><a>Submenu 1</a></li>
-            <li><a>Submenu 2</a></li>
-          </ul>
-        </li>
-        <li><a>Item 3</a></li>
+        <li><a>হোম </a></li>
+        <li><a>যোগাযোগ</a></li>
+        <li><Link to="/dashboard">ড্যাশবোর্ড</Link></li>
       </ul>
     </div>
-    <a class="btn btn-ghost text-xl">Somiti</a>
+    <a class="btn btn-ghost text-xl text-green-500">Somiti</a>
   </div>
   <div class="navbar-center hidden lg:flex">
     <ul class="menu menu-horizontal px-1">
-      <li><a>Item 1</a></li>
-      <li><a>Item </a></li>
+      <li><a>হোম </a></li>
+      <li><a>যোগাযোগ</a></li>
       <li><Link to="/dashboard">ড্যাশবোর্ড</Link></li>
     </ul>
   </div>
   <div class="navbar-end">
-  <button className="px-5 py-2 cursor-pointer text-white font-semibold rounded-lg shadow-lg bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 hover:from-yellow-500 hover:via-red-500 hover:to-pink-500 transition-all duration-500">
+  {/* <button className="px-5 py-2 cursor-pointer text-white font-semibold rounded-lg shadow-lg bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 hover:from-yellow-500 hover:via-red-500 hover:to-pink-500 transition-all duration-500">
                         শুরু করুন
-    </button>
+    </button> */}
+    {user ? <LogoutButton /> : <a href="/login" className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">লগইন</a>}
   </div>
 </div>
     </div>
