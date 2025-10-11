@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const DpsSchemeCreate = () => {
   const [form, setForm] = useState({
@@ -56,11 +57,22 @@ const DpsSchemeCreate = () => {
         `${import.meta.env.VITE_BASE_URL}/api/dps-schemes`,
         form
       );
-      alert("✅ DPS স্কিম সফলভাবে তৈরি হয়েছে!");
-      console.log(res.data);
+      Swal.fire({
+        title: "✅ DPS স্কিম সফলভাবে তৈরি হয়েছে!",
+        icon: "success",
+        draggable: true
+      });
+      
+      // console.log(res.data);
     } catch (err) {
-      console.error(err);
-      alert("❌ স্কিম তৈরিতে সমস্যা হয়েছে!");
+      // console.error(err);
+      Swal.fire({
+        icon: "error",
+        title: "❌ স্কিম তৈরিতে সমস্যা হয়েছে!",
+        text: "Something went wrong!",
+        footer: '<a href="#">Why do I have this issue?</a>'
+      });
+      
     }
   };
 
@@ -71,7 +83,7 @@ const DpsSchemeCreate = () => {
   }
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-pink-50 to-indigo-100 p-6">
+    <div className="min-h-screen flex justify-center items-center  p-6">
       <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-lg">
         <h2 className="text-2xl font-bold mb-6 text-center">DPS স্কিম তৈরী করুন</h2>
         <form className="space-y-4" onSubmit={handleSubmit}>

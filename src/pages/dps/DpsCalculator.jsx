@@ -31,7 +31,7 @@ const DpsCalculator = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-indigo-100 flex justify-center items-center p-6">
+    <div className="min-h-screen flex justify-center items-center p-6">
       <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-lg">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
           🧮 DPS ক্যালকুলেটর

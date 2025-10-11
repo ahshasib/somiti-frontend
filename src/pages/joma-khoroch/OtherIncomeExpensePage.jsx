@@ -77,7 +77,7 @@ const OtherIncomeExpensePage = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <div className="p-6  min-h-screen">
       <h1 className="text-3xl font-bold mb-6 text-indigo-700 border-b pb-3">অন্যান্য আয়-ব্যয়ের খাত</h1>
 
       {/* Add Category */}

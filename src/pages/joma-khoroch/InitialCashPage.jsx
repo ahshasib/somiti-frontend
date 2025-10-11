@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const InitialCashPage = () => {
   const [cashData, setCashData] = useState(null);
@@ -24,7 +25,12 @@ const InitialCashPage = () => {
       description,
     });
     setCashData(res.data);
-    alert("তথ্য সংরক্ষণ করা হয়েছে ✅");
+    Swal.fire({
+      title: "তথ্য সংরক্ষণ করা হয়েছে ✅",
+      icon: "success",
+      draggable: true
+    });
+    
   };
 
   // পরিবর্তন বাটনে ক্লিক করলে ইনপুটে মান বসানো

@@ -5,6 +5,7 @@ import { FaCamera } from "react-icons/fa";
 const CreateMember = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [role, setRole] = useState("member"); 
   const [formData, setFormData] = useState({
     date: new Date().toISOString().split("T")[0],
     name: "",
@@ -36,13 +37,12 @@ const CreateMember = () => {
     nomineeNidBackFile: "",
   });
 
-  // ================= Auto-generate Member ID =================
+  // Auto-generate Member ID
   useEffect(() => {
     const generateMemberId = async () => {
       try {
-        // Backend API call to get last member ID
         const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/members/last`);
-        const lastId = res.data?.lastMemberId || "0000"; // যদি কোনো member না থাকে
+        const lastId = res.data?.lastMemberId || "0000";
         const newIdNumber = String(parseInt(lastId) + 1).padStart(4, "0");
         setFormData((prev) => ({ ...prev, memberId: newIdNumber }));
       } catch (err) {
@@ -52,7 +52,6 @@ const CreateMember = () => {
     };
     generateMemberId();
   }, []);
-  // ============================================================
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
@@ -79,34 +78,74 @@ const CreateMember = () => {
     e.preventDefault();
     setLoading(true);
     setMessage("");
-
+  
     try {
-      const memberImage = await uploadImage(formData.memberFile);
-      const nomineeImage = await uploadImage(formData.nomineeFile);
-      const nidFront = await uploadImage(formData.nidFrontFile);
-      const nidBack = await uploadImage(formData.nidBackFile);
-      const nomineeNidFront = await uploadImage(formData.nomineeNidFrontFile);
-      const nomineeNidBack = await uploadImage(formData.nomineeNidBackFile);
-
-      const dataToSend = {
-        ...formData,
+      // Upload images conditionally based on role
+      let memberImage = "", nidFront = "", nidBack = "";
+      let nomineeImage = "", nomineeNidFront = "", nomineeNidBack = "";
+  
+      // Always upload these if present
+      if (formData.memberFile) memberImage = await uploadImage(formData.memberFile);
+      if (formData.nidFrontFile) nidFront = await uploadImage(formData.nidFrontFile);
+      if (formData.nidBackFile) nidBack = await uploadImage(formData.nidBackFile);
+  
+      // Only member role uploads nominee images
+      if (role === "member") {
+        if (formData.nomineeFile) nomineeImage = await uploadImage(formData.nomineeFile);
+        if (formData.nomineeNidFrontFile) nomineeNidFront = await uploadImage(formData.nomineeNidFrontFile);
+        if (formData.nomineeNidBackFile) nomineeNidBack = await uploadImage(formData.nomineeNidBackFile);
+      }
+  
+      // Prepare base data
+      let dataToSend = {
+        role,
+        name: formData.name,
+        mobileNumber: formData.mobileNumber,
+        memberId: formData.memberId,
+        address: formData.address,
+        nidNumber: formData.nidNumber,
+        fatherOrHusband: formData.fatherOrHusband,
+        password: formData.password,
         memberImage,
-        nomineeImage,
         nidFront,
         nidBack,
-        nomineeNidFront,
-        nomineeNidBack,
       };
-
-      const res = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/api/members`,
-        dataToSend
-      );
-
+  
+      // Add member-only fields
+      if (role === "member") {
+        dataToSend = {
+          ...dataToSend,
+          guarantor: formData.guarantor,
+          nomineeName: formData.nomineeName,
+          nomineeMobile: formData.nomineeMobile,
+          nomineeRelation: formData.nomineeRelation,
+          nomineeImage,
+          nomineeNidFront,
+          nomineeNidBack,
+        };
+      }
+  
+      // Send data to server
+      const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/members`, dataToSend);
+  
       if (res.data?.member) {
-        setMessage("✅ সদস্য সফলভাবে তৈরি হয়েছে!");
+        setMessage("✅ সফলভাবে তৈরি হয়েছে!");
+  
+        // Reset form fields
         setFormData({
-          ...formData,
+          date: new Date().toISOString().split("T")[0],
+          name: "",
+          mobileNumber: "",
+          memberId: String(parseInt(formData.memberId) + 1).padStart(4, "0"), // next member ID
+          address: "",
+          nidNumber: "",
+          fatherOrHusband: "",
+          guarantor: "",
+          nomineeName: "",
+          nomineeMobile: "",
+          nomineeRelation: "",
+          password: "",
+          status: "active",
           memberFile: null,
           nomineeFile: null,
           nidFrontFile: null,
@@ -114,6 +153,7 @@ const CreateMember = () => {
           nomineeNidFrontFile: null,
           nomineeNidBackFile: null,
         });
+  
         setFileNames({
           memberFile: "",
           nomineeFile: "",
@@ -122,9 +162,6 @@ const CreateMember = () => {
           nomineeNidFrontFile: "",
           nomineeNidBackFile: "",
         });
-        // নতুন member ID generate করা
-        const newIdNumber = String(parseInt(formData.memberId) + 1).padStart(4, "0");
-        setFormData((prev) => ({ ...prev, memberId: newIdNumber }));
       } else {
         setMessage("⚠️ কিছু সমস্যা হয়েছে, আবার চেষ্টা করুন।");
       }
@@ -135,9 +172,35 @@ const CreateMember = () => {
       setLoading(false);
     }
   };
+  
 
-  // ===== Image fields =====
-  const imageFields = [
+  // Form fields
+  const allFields = [
+    { label: "সদস্যর নাম", name: "name", type: "text" },
+    { label: "মোবাইল নম্বর", name: "mobileNumber", type: "text" },
+    { label: "সদস্য ID", name: "memberId", type: "text", readOnly: true },
+    { label: "ঠিকানা", name: "address", type: "text" },
+    { label: "NID নম্বর", name: "nidNumber", type: "text" },
+    { label: "পিতা/স্বামী নাম", name: "fatherOrHusband", type: "text" },
+    { label: "জামানতকারীর তথ্য", name: "guarantor", type: "text" },
+    { label: "নোমিনীর নাম", name: "nomineeName", type: "text" },
+    { label: "নোমিনীর মোবাইল", name: "nomineeMobile", type: "text" },
+    { label: "নোমিনীর সম্পর্ক", name: "nomineeRelation", type: "text" },
+    { label: "পাসওয়ার্ড", name: "password", type: "password" },
+  ];
+
+  const agentFields = [
+    { label: "সদস্যর নাম", name: "name", type: "text" },
+    { label: "মোবাইল নম্বর", name: "mobileNumber", type: "text" },
+    { label: "সদস্য ID", name: "memberId", type: "text", readOnly: true },
+    { label: "ঠিকানা", name: "address", type: "text" },
+    { label: "NID নম্বর", name: "nidNumber", type: "text" },
+    { label: "পিতা/স্বামী নাম", name: "fatherOrHusband", type: "text" },
+    { label: "পাসওয়ার্ড", name: "password", type: "password" },
+  ];
+
+  // Image fields
+  const allImageFields = [
     { label: "সদস্য ছবি", name: "memberFile" },
     { label: "নোমিনির ছবি", name: "nomineeFile" },
     { label: "সদস্য NID সামনের অংশ", name: "nidFrontFile" },
@@ -146,10 +209,16 @@ const CreateMember = () => {
     { label: "নোমিনীর NID পিছনের অংশ", name: "nomineeNidBackFile" },
   ];
 
+  const agentImageFields = [
+    { label: "সদস্য ছবি", name: "memberFile" },
+    { label: "সদস্য NID সামনের অংশ", name: "nidFrontFile" },
+    { label: "সদস্য NID পিছনের অংশ", name: "nidBackFile" },
+  ];
+
   return (
     <div className="max-w-5xl mx-auto p-6 bg-white shadow-xl rounded-xl">
       <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
-        সদস্য তৈরী করুন
+        সদস্য / এজেন্ট তৈরী করুন
       </h2>
 
       {message && (
@@ -165,20 +234,36 @@ const CreateMember = () => {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Role Selection */}
+        <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
+          <label className="md:w-40 font-medium text-gray-700">Role:</label>
+          <div className="flex gap-6">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="radio"
+                name="role"
+                checked={role === "member"}
+                onChange={() => setRole("member")}
+                className="w-4 h-4 accent-blue-500"
+              />
+              সদস্য
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="radio"
+                name="role"
+                checked={role === "agent"}
+                onChange={() => setRole("agent")}
+                className="w-4 h-4 accent-blue-500"
+              />
+              এজেন্ট
+            </label>
+          </div>
+        </div>
+
+        {/* Input Fields */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {[ 
-            { label: "সদস্যর নাম", name: "name", type: "text" },
-            { label: "মোবাইল নম্বর", name: "mobileNumber", type: "text" },
-            { label: "সদস্য ID", name: "memberId", type: "text", readOnly: true },
-            { label: "ঠিকানা", name: "address", type: "text" },
-            { label: "NID নম্বর", name: "nidNumber", type: "text" },
-            { label: "পিতা/স্বামী নাম", name: "fatherOrHusband", type: "text" },
-            { label: "জামানতকারীর তথ্য", name: "guarantor", type: "text" },
-            { label: "নোমিনীর নাম", name: "nomineeName", type: "text" },
-            { label: "নোমিনীর মোবাইল", name: "nomineeMobile", type: "text" },
-            { label: "নোমিনীর সম্পর্ক", name: "nomineeRelation", type: "text" },
-            { label: "পাসওয়ার্ড", name: "password", type: "password" },
-          ].map((field, idx) => (
+          {(role === "member" ? allFields : agentFields).map((field, idx) => (
             <div key={idx} className="flex flex-col md:flex-row items-start md:items-center gap-2">
               <label className="md:w-40 font-medium text-gray-700">{field.label}:</label>
               <input
@@ -197,7 +282,7 @@ const CreateMember = () => {
 
         {/* Image Upload */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
-          {imageFields.map((img, idx) => (
+          {(role === "member" ? allImageFields : agentImageFields).map((img, idx) => (
             <label
               key={idx}
               className="flex flex-col items-center justify-center border border-gray-300 rounded-lg h-32 w-32 cursor-pointer hover:bg-gray-50 transition relative"

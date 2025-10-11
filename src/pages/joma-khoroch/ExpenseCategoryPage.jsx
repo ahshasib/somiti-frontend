@@ -43,7 +43,7 @@ const ExpenseCategoryPage = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <div className="p-6 min-h-screen">
       <h2 className="text-2xl font-bold mb-4 text-gray-700">
         খরচের খাত ব্যবস্থাপনা
       </h2>
