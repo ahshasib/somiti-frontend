@@ -74,6 +74,9 @@ const allMenuCategories = [
         icon: <MdAccessTime />,
         roles: ["admin", "agent"],
       },
+      { name: "লোনের আবেদন ফর্ম", path: "/dashboard/loan-application", icon: <FaFileAlt />,roles: ["admin"] },
+
+      { name: "কিস্তির তারিখ মেয়াদ উত্তীর্ণ - সদস্য", path: "/dashboard/expire", icon: <MdAccessTime />,roles: ["admin", "agent"] },
       {
         name: "লোন বন্ধ করুন",
         path: "/dashboard/close-loan",
@@ -117,6 +120,8 @@ const allMenuCategories = [
         icon: <FaFileAlt />,
         roles: ["admin"],
       },
+      { name: "FDR জমা এবং উত্তোলন রিপোর্ট", path: "/dashboard/fdr-deposit-withdraw-report", icon: <FaFileAlt />,roles: ["admin"] },
+      { name: "FDR ব্যবস্থাপনা", path: "/dashboard/fdr-management", icon: <FaChartPie />,roles: ["admin",] },
     ],
   },
   {
@@ -154,8 +159,28 @@ const allMenuCategories = [
         icon: <MdOutlinePayments />,
         roles: ["admin", "agent", "member"],
       },
+      { name: "DPS ব্যবস্থাপনা", path: "/dashboard/dps-management", icon: <FaChartPie />,roles: ["admin"] },
+      { name: "দৈনিক DPS কালেকশন রিপোর্ট", path: "/dashboard/dps-daily-collection-report", icon: <FaFileAlt />,roles: ["admin", "agent"] },
+      { name: "সকল DPS সদস্যের লেনদেন রিপোর্ট", path: "/dashboard/dps-member-report", icon: <FaUsers />,roles: ["admin"] },
+      { name: "DPS স্কিম সেটিং করুন", path: "/dashboard/dps-scheme-settings", icon: <FaCoins />,roles: ["admin"] },
+      { name: "আজ DPS এর কিস্তি দেয়ার তারিখ", path: "/dashboard/dps-today", icon: <MdAccessTime />,roles: ["admin", "agent"] },
+
     ],
   },
+  {
+    name: "জমা-খরচ বিভাগ",
+    icon: <FaWallet />,
+    roles: ["admin"],
+    subMenu: [
+      { name: "খরচের খাত ব্যবস্থাপনা", path: "/dashboard/expense-head-management", icon: <FaRegListAlt />,roles: ["admin"] },
+      { name: "অন্যান্য আয়-ব্যয়ের খাত", path: "/dashboard/other-income-expense", icon: <FaRegListAlt />,roles: ["admin"] },
+      // { name: "অন্যান্য নগদ জমার খাত", path: "/dashboard/other-cash-deposit", icon: <FaCoins /> },
+      { name: "বেতনের রিপোর্ট", path: "/dashboard/salary-report", icon: <FaFileAlt />,roles: ["admin"] },
+      { name: "হিসাব শুরুর ক্যাশ টাকা", path: "/dashboard/opening-cash", icon: <FaWallet />,roles: ["admin"] },
+      // { name: "খরচের রিপোর্ট", path: "/dashboard/expense-report", icon: <FaFileAlt /> },
+    ],
+  },
+
   {
     name: "সমিতি ব্যবস্থাপনা রিপোর্ট",
     icon: <FaChartPie />,

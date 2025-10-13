@@ -16,7 +16,7 @@
 //     FaChevronDown,
 //   } from "react-icons/fa";
 //   import { MdOutlinePayments, MdAccessTime, MdSavings } from "react-icons/md";
-  
+
 
 // const menuCategories = [
 //     {
@@ -126,7 +126,7 @@
 //   const toggleMenu = (index) => {
 //     setOpenIndex(openIndex === index ? null : index);
 //   };
-  
+
 //   return (
 //     <>
 //       {/* Overlay for mobile */}
@@ -166,7 +166,7 @@
 //   <p className="text-sm text-gray-500">Phone: {user?.mobileNumber || "-"}</p>
 // </div>
 
- 
+
 //   {/* Menu */}
 //   <ul className="space-y-3">
 //     {menuCategories.map((category, idx) => (
@@ -233,7 +233,7 @@ const allMenuCategories = [
   {
     name: "সদস্য ব্যবস্থাপনা",
     icon: <FaUsers />,
-    roles: ["admin", "agent","member"],
+    roles: ["admin", "agent", "member"],
     subMenu: [
       { name: "সদস্য তৈরী করুন", path: "/dashboard/member-create", icon: <FaUserTie />, roles: ["admin"] },
       { name: "সকল সদস্যের তথ্য", path: "/dashboard/member-info", icon: <FaRegListAlt />, roles: ["admin"] },
@@ -243,16 +243,16 @@ const allMenuCategories = [
   {
     name: "লোন ব্যবস্থাপনা",
     icon: <FaWallet />,
-    roles: ["admin", "agent","member"],
+    roles: ["admin", "agent", "member"],
     subMenu: [
       { name: "লোন প্রদান করুন", path: "/dashboard/loan-create", icon: <FaCoins />, roles: ["admin"] },
-      { name: "সকল লোনের তথ্য", path: "/dashboard/all-loans", icon: <FaRegListAlt />, roles: ["admin","member"] },
+      { name: "সকল লোনের তথ্য", path: "/dashboard/all-loans", icon: <FaRegListAlt />, roles: ["admin", "member"] },
       { name: "লোনের কিস্তি কালেকশন", path: "/dashboard/loan-installment-collection", icon: <MdAccessTime />, roles: ["admin", "agent"] },
       { name: "লোনের সকল কিস্তি কালেকশন", path: "/dashboard/all-loan-installments", icon: <MdAccessTime />, roles: ["admin"] },
       { name: "আজ লোনের কিস্তির তারিখ", path: "/dashboard/today-installment", icon: <MdAccessTime />, roles: ["admin", "agent"] },
-      { name: "লোনের আবেদন ফর্ম", path: "/dashboard/loan-application", icon: <FaFileAlt />,roles: ["admin"] },
+      { name: "লোনের আবেদন ফর্ম", path: "/dashboard/loan-application", icon: <FaFileAlt />, roles: ["admin"] },
 
-      { name: "কিস্তির তারিখ মেয়াদ উত্তীর্ণ - সদস্য", path: "/dashboard/expire", icon: <MdAccessTime />,roles: ["admin", "agent"] },
+      { name: "কিস্তির তারিখ মেয়াদ উত্তীর্ণ - সদস্য", path: "/dashboard/expire", icon: <MdAccessTime />, roles: ["admin", "agent"] },
       { name: "লোন বন্ধ করুন", path: "/dashboard/close-loan", icon: <FaCoins />, roles: ["admin"] },
     ],
   },
@@ -263,45 +263,45 @@ const allMenuCategories = [
     subMenu: [
       { name: "FDR ক্যালকুলেটর", path: "/dashboard/fdr-calculator", icon: <FaCalculator />, roles: ["admin", "member"] },
       { name: "FDR স্কিম তৈরি করুন", path: "/dashboard/fdr-scheme-create", icon: <FaFileAlt />, roles: ["admin"] },
-      { name: "FDR ব্যবস্থাপনা", path: "/dashboard/fdr-management", icon: <FaChartPie />,roles: ["admin",] },
+      { name: "FDR ব্যবস্থাপনা", path: "/dashboard/fdr-management", icon: <FaChartPie />, roles: ["admin",] },
       { name: "FDR সেটিং এবং কালেকশন", path: "/dashboard/fdr-settings", icon: <FaCoins />, roles: ["admin"] },
-      { name: "সকল FDR কালেকশন", path: "/dashboard/all-fdr", icon: <MdOutlinePayments />, roles: ["admin","member"] },
+      { name: "সকল FDR কালেকশন", path: "/dashboard/all-fdr", icon: <MdOutlinePayments />, roles: ["admin", "member"] },
 
       { name: "FDR কালেকশন রিপোর্ট", path: "/dashboard/fdr-collection-report", icon: <FaFileAlt />, roles: ["admin"] },
-      { name: "FDR জমা এবং উত্তোলন রিপোর্ট", path: "/dashboard/fdr-deposit-withdraw-report", icon: <FaFileAlt />,roles: ["admin"] },
+      { name: "FDR জমা এবং উত্তোলন রিপোর্ট", path: "/dashboard/fdr-deposit-withdraw-report", icon: <FaFileAlt />, roles: ["admin"] },
     ],
   },
   {
     name: "DPS ব্যবস্থাপনা",
     icon: <MdSavings />,
-    roles: ["admin", "agent","member"],
+    roles: ["admin", "agent", "member"],
     subMenu: [
       { name: "DPS ক্যালকুলেটর", path: "/dashboard/dps-calculator", icon: <FaCalculator />, roles: ["admin", "agent", "member"] },
       { name: "DPS স্কিম তৈরী করুন", path: "/dashboard/dps-scheme-create", icon: <FaFileAlt />, roles: ["admin"] },
-      { name: "DPS স্কিম সেটিং করুন", path: "/dashboard/dps-scheme-settings", icon: <FaCoins />,roles: ["admin"] },
+      { name: "DPS স্কিম সেটিং করুন", path: "/dashboard/dps-scheme-settings", icon: <FaCoins />, roles: ["admin"] },
       { name: "সকল DPS স্কিম", path: "/dashboard/all-dps-schemes", icon: <MdOutlinePayments />, roles: ["admin", "agent"] },
-      { name: "DPS ব্যবস্থাপনা", path: "/dashboard/dps-management", icon: <FaChartPie />,roles: ["admin"] },
+      { name: "DPS ব্যবস্থাপনা", path: "/dashboard/dps-management", icon: <FaChartPie />, roles: ["admin"] },
       { name: "DPS কালেকশন করুন", path: "/dashboard/dps-collection", icon: <FaMoneyBillWave />, roles: ["admin", "agent"] },
-      { name: "সকল DPS কালেকশন", path: "/dashboard/all-dps-collection", icon: <MdOutlinePayments />, roles: ["admin", "agent","member"] },
-      { name: "আজ DPS এর কিস্তি দেয়ার তারিখ", path: "/dashboard/dps-today", icon: <MdAccessTime />,roles: ["admin", "agent"] },
-      { name: "দৈনিক DPS কালেকশন রিপোর্ট", path: "/dashboard/dps-daily-collection-report", icon: <FaFileAlt />,roles: ["admin", "agent"] },
-      { name: "সকল DPS সদস্যের লেনদেন রিপোর্ট", path: "/dashboard/dps-member-report", icon: <FaUsers />,roles: ["admin"] },
+      { name: "সকল DPS কালেকশন", path: "/dashboard/all-dps-collection", icon: <MdOutlinePayments />, roles: ["admin", "agent", "member"] },
+      { name: "আজ DPS এর কিস্তি দেয়ার তারিখ", path: "/dashboard/dps-today", icon: <MdAccessTime />, roles: ["admin", "agent"] },
+      { name: "দৈনিক DPS কালেকশন রিপোর্ট", path: "/dashboard/dps-daily-collection-report", icon: <FaFileAlt />, roles: ["admin", "agent"] },
+      { name: "সকল DPS সদস্যের লেনদেন রিপোর্ট", path: "/dashboard/dps-member-report", icon: <FaUsers />, roles: ["admin"] },
 
     ],
   },
   {
-          name: "জমা-খরচ বিভাগ",
-          icon: <FaWallet />,
-          roles: ["admin"],
-          subMenu: [
-            { name: "খরচের খাত ব্যবস্থাপনা", path: "/dashboard/expense-head-management", icon: <FaRegListAlt />,roles: ["admin"] },
-            { name: "অন্যান্য আয়-ব্যয়ের খাত", path: "/dashboard/other-income-expense", icon: <FaRegListAlt />,roles: ["admin"] },
-            // { name: "অন্যান্য নগদ জমার খাত", path: "/dashboard/other-cash-deposit", icon: <FaCoins /> },
-            { name: "বেতনের রিপোর্ট", path: "/dashboard/salary-report", icon: <FaFileAlt />,roles: ["admin"] },
-            { name: "হিসাব শুরুর ক্যাশ টাকা", path: "/dashboard/opening-cash", icon: <FaWallet />,roles: ["admin"] },
-            // { name: "খরচের রিপোর্ট", path: "/dashboard/expense-report", icon: <FaFileAlt /> },
-          ],
-        },
+    name: "জমা-খরচ বিভাগ",
+    icon: <FaWallet />,
+    roles: ["admin"],
+    subMenu: [
+      { name: "খরচের খাত ব্যবস্থাপনা", path: "/dashboard/expense-head-management", icon: <FaRegListAlt />, roles: ["admin"] },
+      { name: "অন্যান্য আয়-ব্যয়ের খাত", path: "/dashboard/other-income-expense", icon: <FaRegListAlt />, roles: ["admin"] },
+      // { name: "অন্যান্য নগদ জমার খাত", path: "/dashboard/other-cash-deposit", icon: <FaCoins /> },
+      { name: "বেতনের রিপোর্ট", path: "/dashboard/salary-report", icon: <FaFileAlt />, roles: ["admin"] },
+      { name: "হিসাব শুরুর ক্যাশ টাকা", path: "/dashboard/opening-cash", icon: <FaWallet />, roles: ["admin"] },
+      // { name: "খরচের রিপোর্ট", path: "/dashboard/expense-report", icon: <FaFileAlt /> },
+    ],
+  },
   {
     name: "সমিতি ব্যবস্থাপনা রিপোর্ট",
     icon: <FaChartPie />,
@@ -317,6 +317,11 @@ const allMenuCategories = [
 
 const Aside = ({ isOpen, onClose }) => {
   const [openIndex, setOpenIndex] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
+  const [title, setTitle] = useState("");
+  const [logo, setLogo] = useState(null);
+  const [file, setFile] = useState(null);
+  const [loading, setLoading] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
   const role = user?.role;
 
@@ -332,6 +337,64 @@ const Aside = ({ isOpen, onClose }) => {
       subMenu: menu.subMenu.filter((item) => item.roles.includes(role)), // ✅ submenu filter
     }))
     .filter((menu) => menu.subMenu.length > 0);
+
+
+    const handleFileChange = (e) => {
+      setFile(e.target.files[0]);
+    };
+  
+    const handleUpload = async (e) => {
+      e.preventDefault();
+      if (!title || !file) {
+        alert("Please fill all fields!");
+        return;
+      }
+  
+      setLoading(true);
+  
+      try {
+        // 1️⃣ Imgbb API upload
+        const formData = new FormData();
+        formData.append("image", file);
+  
+        const imgbbKey = import.meta.env.VITE_IMGBB_KEY; // .env তে রাখা API key
+        const imgbbRes = await fetch(`https://api.imgbb.com/1/upload?key=${imgbbKey}`, {
+          method: "POST",
+          body: formData,
+        });
+  
+        const imgbbData = await imgbbRes.json();
+        if (!imgbbData.success) {
+          alert("ImgBB upload failed!");
+          setLoading(false);
+          return;
+        }
+  
+        const logoUrl = imgbbData.data.url; // Imgbb থেকে প্রাপ্ত URL
+  
+        // 2️⃣ Backend এ POST করে DB তে save করা
+        const backendRes = await fetch(`${import.meta.env.VITE_BASE_URL}/api/logo`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ title, logoUrl }),
+        });
+  
+        if (backendRes.ok) {
+          alert("Logo uploaded successfully!");
+          setTitle("");
+          setFile(null);
+        } else {
+          alert("Failed to save logo to DB.");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Something went wrong.");
+      }
+  
+      setLoading(false);
+    };
 
   return (
     <>
@@ -361,9 +424,19 @@ const Aside = ({ isOpen, onClose }) => {
             className="w-20 h-20 rounded-full mb-3 border-2 border-indigo-500"
           />
           <h3 className="text-lg font-semibold text-gray-800">{user?.name}</h3>
-          <p className="text-sm text-gray-500">Role: {role}</p>
+          <p className="text-sm text-gray-500">Role: {user?.role}</p>
           <p className="text-sm text-gray-500">ID: {user?._id || "-"}</p>
           <p className="text-sm text-gray-500">Phone: {user?.mobileNumber || "-"}</p>
+
+          {/* Add Logo Button (Admin Only) */}
+          {role === "admin" && (
+            <button
+              onClick={() => setShowPopup(true)}
+              className="mt-3 px-4 py-2 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700 transition"
+            >
+              + Add Logo
+            </button>
+          )}
         </div>
 
         {/* Menu */}
@@ -402,6 +475,59 @@ const Aside = ({ isOpen, onClose }) => {
             </li>
           ))}
         </ul>
+
+
+        {/* Popup Modal */}
+        {showPopup && (
+  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+    <div className="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-md relative animate-fadeIn">
+      {/* Header */}
+      <h3 className="text-2xl font-bold mb-6 text-gray-800 text-center">Upload New Logo</h3>
+
+      {/* Form */}
+      <form onSubmit={handleUpload} className="flex flex-col gap-4">
+        <input
+          type="text"
+          placeholder="Enter Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
+        />
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
+          className="border border-gray-300 p-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
+        />
+
+        <button
+          type="submit"
+          className="bg-indigo-600 text-white p-3 rounded-xl hover:bg-indigo-700 font-semibold transition"
+          disabled={loading}
+        >
+          {loading ? "Uploading..." : "Upload"}
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setShowPopup(false)}
+          className="bg-gray-200 text-gray-800 p-3 rounded-xl hover:bg-gray-300 font-semibold transition"
+        >
+          Cancel
+        </button>
+      </form>
+
+      {/* Close Icon */}
+      <button
+        onClick={() => setShowPopup(false)}
+        className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition text-xl font-bold"
+      >
+        &times;
+      </button>
+    </div>
+  </div>
+)}
+
       </aside>
     </>
   );

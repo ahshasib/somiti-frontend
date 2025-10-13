@@ -44,6 +44,7 @@ import PrivateRoute from '../privetRoute/PrivateRoute';
 import Login from '../pages/login/Login';
 import RoleBasedRoute from '../privetRoute/RoleBasedRoute';
 import DashboardHome from '../component/DashboardHome';
+import LoanReceipt from '../pages/lone/LoanReceipt';
 
 
 
@@ -79,13 +80,14 @@ const router = createBrowserRouter(
                 //Loans
               { path: "/dashboard/loan-create", element: (<RoleBasedRoute allowedRoles={["admin"]}><LoanForm /></RoleBasedRoute>) },
               { path: "/dashboard/loan-savings-collection", element: (<RoleBasedRoute allowedRoles={["admin",]}><LoanSavingCollectionForm /></RoleBasedRoute>) },
-              { path: "/dashboard/all-loans", element:  (<RoleBasedRoute allowedRoles={["admin"]}><AllLoans /></RoleBasedRoute>)},
+              { path: "/dashboard/all-loans", element:  (<RoleBasedRoute allowedRoles={["admin","member"]}><AllLoans /></RoleBasedRoute>)},
               { path: "/dashboard/loan-installment-collection", element:  (<RoleBasedRoute allowedRoles={["admin","agent"]}><LoanCollection /></RoleBasedRoute>)},
               { path: "/dashboard/all-loan-installments", element:  (<RoleBasedRoute allowedRoles={["admin"]}><LoansCollectionPage /></RoleBasedRoute>)},
               { path: "/dashboard/today-installment", element:  (<RoleBasedRoute allowedRoles={["admin","agent"]}><TodayInstallments /></RoleBasedRoute>)},
               { path: "/dashboard/expire", element:  (<RoleBasedRoute allowedRoles={["admin","agent"]}><OverdueInstallments /></RoleBasedRoute>)},
               { path: "/dashboard/close-loan", element: (<RoleBasedRoute allowedRoles={["admin"]}><CloseLoansPage/> </RoleBasedRoute>)},
               { path: "/dashboard/loan-application", element:  (<RoleBasedRoute allowedRoles={["admin"]}><LoanApplicationForm/></RoleBasedRoute>)},
+              { path:"/dashboard/loan-receipt/:id" , element:  (<RoleBasedRoute allowedRoles={["admin"]}><LoanReceipt/></RoleBasedRoute>)},
               //members
               { path: "/dashboard/member-create", element:  (<RoleBasedRoute allowedRoles={["admin"]}><CreateMember /></RoleBasedRoute>)},
               { path: "/dashboard/member-info", element:  (<RoleBasedRoute allowedRoles={["admin"]}><MembersPage /></RoleBasedRoute>)},
