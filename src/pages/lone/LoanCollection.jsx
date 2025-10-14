@@ -65,6 +65,7 @@ const LoanCollection = () => {
           collectionAmount: parseFloat(formData.amount),
           description: formData.description,
           sendSMS: formData.sendSMS,
+          date: formData.date
         }
       );
 

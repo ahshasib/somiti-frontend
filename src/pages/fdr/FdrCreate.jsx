@@ -33,6 +33,7 @@ const FdrCreate = () => {
                 status,
             });
             alert(res.data.message);
+            
             // Reset form
             setSchemeType("Fixed লাভ");
             setDuration(1);

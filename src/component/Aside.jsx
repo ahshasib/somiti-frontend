@@ -297,7 +297,7 @@ const allMenuCategories = [
       { name: "খরচের খাত ব্যবস্থাপনা", path: "/dashboard/expense-head-management", icon: <FaRegListAlt />, roles: ["admin"] },
       { name: "অন্যান্য আয়-ব্যয়ের খাত", path: "/dashboard/other-income-expense", icon: <FaRegListAlt />, roles: ["admin"] },
       // { name: "অন্যান্য নগদ জমার খাত", path: "/dashboard/other-cash-deposit", icon: <FaCoins /> },
-      { name: "বেতনের রিপোর্ট", path: "/dashboard/salary-report", icon: <FaFileAlt />, roles: ["admin"] },
+      // { name: "বেতনের রিপোর্ট", path: "/dashboard/salary-report", icon: <FaFileAlt />, roles: ["admin"] },
       { name: "হিসাব শুরুর ক্যাশ টাকা", path: "/dashboard/opening-cash", icon: <FaWallet />, roles: ["admin"] },
       // { name: "খরচের রিপোর্ট", path: "/dashboard/expense-report", icon: <FaFileAlt /> },
     ],

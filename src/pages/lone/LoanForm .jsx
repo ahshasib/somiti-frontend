@@ -103,11 +103,9 @@ const LoanForm = () => {
     try {
       await axios.post(`${import.meta.env.VITE_BASE_URL}/api/loans`, loanData);
       Swal.fire({
-        position: "top-end",
-        icon: "success",
         title: `Loan saved successfully for ${loanData.name}!`,
-        showConfirmButton: false,
-        timer: 1500,
+        icon: "success",
+        draggable: true
       });
     } catch (err) {
       console.error(err);
