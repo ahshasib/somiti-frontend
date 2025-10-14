@@ -13,6 +13,7 @@ const MembersPage = () => {
     const fetchMembers = async () => {
       try {
         const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/members`);
+        
         setMembers(res.data);
         setFilteredMembers(res.data);
       } catch (err) {
