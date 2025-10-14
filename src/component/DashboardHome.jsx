@@ -112,7 +112,7 @@ const allMenuCategories = [
         name: "সকল FDR কালেকশন",
         path: "/dashboard/all-fdr",
         icon: <MdOutlinePayments />,
-        roles: ["admin", "member"],
+        roles: ["admin"],
       },
       {
         name: "FDR কালেকশন রিপোর্ট",
@@ -121,7 +121,7 @@ const allMenuCategories = [
         roles: ["admin"],
       },
       { name: "FDR জমা এবং উত্তোলন রিপোর্ট", path: "/dashboard/fdr-deposit-withdraw-report", icon: <FaFileAlt />,roles: ["admin"] },
-      { name: "FDR ব্যবস্থাপনা", path: "/dashboard/fdr-management", icon: <FaChartPie />,roles: ["admin",] },
+      { name: "FDR ব্যবস্থাপনা", path: "/dashboard/fdr-management", icon: <FaChartPie />,roles: ["admin", "member"] },
     ],
   },
   {
@@ -145,7 +145,7 @@ const allMenuCategories = [
         name: "সকল DPS স্কিম",
         path: "/dashboard/all-dps-schemes",
         icon: <MdOutlinePayments />,
-        roles: ["admin", "agent"],
+        roles: ["admin", "agent", "member"],
       },
       {
         name: "DPS কালেকশন করুন",
@@ -157,11 +157,11 @@ const allMenuCategories = [
         name: "সকল DPS কালেকশন",
         path: "/dashboard/all-dps-collection",
         icon: <MdOutlinePayments />,
-        roles: ["admin", "agent", "member"],
+        roles: ["admin", "agent"],
       },
       { name: "DPS ব্যবস্থাপনা", path: "/dashboard/dps-management", icon: <FaChartPie />,roles: ["admin"] },
       { name: "দৈনিক DPS কালেকশন রিপোর্ট", path: "/dashboard/dps-daily-collection-report", icon: <FaFileAlt />,roles: ["admin", "agent"] },
-      { name: "সকল DPS সদস্যের লেনদেন রিপোর্ট", path: "/dashboard/dps-member-report", icon: <FaUsers />,roles: ["admin"] },
+      { name: "সকল DPS সদস্যের লেনদেন রিপোর্ট", path: "/dashboard/dps-member-report", icon: <FaUsers />,roles: ["admin","agent","member"] },
       { name: "DPS স্কিম সেটিং করুন", path: "/dashboard/dps-scheme-settings", icon: <FaCoins />,roles: ["admin"] },
       { name: "আজ DPS এর কিস্তি দেয়ার তারিখ", path: "/dashboard/dps-today", icon: <MdAccessTime />,roles: ["admin", "agent"] },
 

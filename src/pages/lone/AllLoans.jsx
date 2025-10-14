@@ -30,7 +30,7 @@ const AllLoans = () => {
     };
 
     fetchLoans();
-  }, [user]);
+  }, []);
 
   useEffect(() => {
     const fetchMembers = async () => {

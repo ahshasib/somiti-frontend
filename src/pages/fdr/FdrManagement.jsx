@@ -16,11 +16,27 @@ const FdrManagement = () => {
     effectiveDate: "",
   });
 
+  // ✅ Get user info (role)
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userRole = user?.role || "member"; // default member
+
+
   // Fetch all FDR
   const fetchFdr = async () => {
     try {
       const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/fdr-management`);
-      setFdrList(res.data);
+      let data = res.data;
+
+      // ✅ Filter if member
+      if (userRole === "member") {
+        data = data.filter(
+          (item) =>
+            item.memberId?.toString().trim() === user._id?.toString().trim() ||
+            item.phone?.toString().trim() === user.mobileNumber?.toString().trim()
+        );
+      }
+
+      setFdrList(data);
     } catch (err) {
       console.error(err);
       alert("FDR ডেটা লোড করতে সমস্যা হয়েছে!");
@@ -34,8 +50,7 @@ const FdrManagement = () => {
   }, []);
 
   // Delete FDR
-// Delete FDR
-const handleDelete = async (id) => {
+  const handleDelete = async (id) => {
     const result = await Swal.fire({
       title: "আপনি কি নিশ্চিত?",
       text: "আপনি কি FDR ডিলিট করতে চান?",
@@ -44,9 +59,9 @@ const handleDelete = async (id) => {
       confirmButtonText: "হ্যাঁ, ডিলিট করো",
       cancelButtonText: "বাতিল",
     });
-  
+
     if (!result.isConfirmed) return;
-  
+
     try {
       await axios.delete(`${import.meta.env.VITE_BASE_URL}/api/fdr-management/${id}`);
       Swal.fire("ডিলিট হয়েছে!", "FDR সফলভাবে ডিলিট করা হয়েছে।", "success");
@@ -56,12 +71,12 @@ const handleDelete = async (id) => {
       Swal.fire("ত্রুটি!", "ডিলিট করতে সমস্যা হয়েছে!", "error");
     }
   };
-  
+
   // Withdraw
   const handleWithdraw = async (fdrId) => {
     if (withdrawAmount <= 0)
       return Swal.fire("সতর্কতা!", "সঠিক টাকা দিন।", "warning");
-  
+
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/api/fdr-management/withdraw/${fdrId}`,
@@ -73,12 +88,16 @@ const handleDelete = async (id) => {
       fetchFdr();
     } catch (err) {
       console.error(err);
-      Swal.fire("ত্রুটি!", err.response?.data?.message || "উত্তোলন করতে সমস্যা হয়েছে!", "error");
+      Swal.fire(
+        "ত্রুটি!",
+        err.response?.data?.message || "উত্তোলন করতে সমস্যা হয়েছে!",
+        "error"
+      );
     }
   };
 
-   // Open Edit Modal
-   const openEditModal = (fdr) => {
+  // Open Edit Modal
+  const openEditModal = (fdr) => {
     setEditFdr(fdr);
     setUpdateData({
       fdrAmount: fdr.fdrAmount,
@@ -87,7 +106,7 @@ const handleDelete = async (id) => {
       effectiveDate: fdr.effectiveDate || new Date().toISOString().slice(0, 10),
     });
   };
-  
+
   // Edit Submit
   const handleEditSubmit = async () => {
     try {
@@ -103,10 +122,7 @@ const handleDelete = async (id) => {
       Swal.fire("ত্রুটি!", "আপডেট করতে সমস্যা হয়েছে!", "error");
     }
   };
-  
 
-
- 
   if (loading) return <div className="p-6 text-center text-lg">লোড হচ্ছে...</div>;
 
   return (
@@ -137,34 +153,43 @@ const handleDelete = async (id) => {
                 <td className="p-3">{fdr.phone}</td>
                 <td className="p-3">{fdr.schemeName}</td>
                 <td className="p-3">৳{fdr.fdrAmount}</td>
-                <td className="p-3">{fdr.interestValue} {fdr.interestType}</td>
+                <td className="p-3">
+                  {fdr.interestValue} {fdr.interestType}
+                </td>
                 <td className="p-3">{fdr.duration} মাস</td>
                 <td className="p-3 capitalize">{fdr.status}</td>
                 <td className="p-3 flex flex-col md:flex-row gap-2">
-                  <button
-                    className="flex items-center gap-1 px-2 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded"
-                    onClick={() => setSelectedFdr(fdr)}
-                  >
-                    <FiEye /> View
-                  </button>
-                  <button
-                    className="flex items-center gap-1 px-2 py-1 bg-green-500 hover:bg-green-600 text-white rounded"
-                    onClick={() => setSelectedFdr(fdr)}
-                  >
-                    <FiDollarSign /> Withdraw
-                  </button>
-                  <button
-                    className="flex items-center gap-1 px-2 py-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded"
-                    onClick={() => openEditModal(fdr)}
-                  >
-                    <FiEdit /> Edit
-                  </button>
-                  <button
-                    className="flex items-center gap-1 px-2 py-1 bg-red-500 hover:bg-red-600 text-white rounded"
-                    onClick={() => handleDelete(fdr.fdrId)}
-                  >
-                    <FiTrash2 /> Delete
-                  </button>
+                  {/* ✅ Actions visible only for admin */}
+                  {userRole === "admin" ? (
+                    <>
+                      <button
+                        className="flex items-center gap-1 px-2 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded"
+                        onClick={() => setSelectedFdr(fdr)}
+                      >
+                        <FiEye /> View
+                      </button>
+                      <button
+                        className="flex items-center gap-1 px-2 py-1 bg-green-500 hover:bg-green-600 text-white rounded"
+                        onClick={() => setSelectedFdr(fdr)}
+                      >
+                        <FiDollarSign /> Withdraw
+                      </button>
+                      <button
+                        className="flex items-center gap-1 px-2 py-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded"
+                        onClick={() => openEditModal(fdr)}
+                      >
+                        <FiEdit /> Edit
+                      </button>
+                      <button
+                        className="flex items-center gap-1 px-2 py-1 bg-red-500 hover:bg-red-600 text-white rounded"
+                        onClick={() => handleDelete(fdr.fdrId)}
+                      >
+                        <FiTrash2 /> Delete
+                      </button>
+                    </>
+                  ) : (
+                    <span className="text-gray-400 italic">No Actions</span>
+                  )}
                 </td>
               </tr>
             ))}
@@ -188,36 +213,41 @@ const handleDelete = async (id) => {
             <p><strong>Status:</strong> {selectedFdr.status}</p>
             <p><strong>Description:</strong> {selectedFdr.description}</p>
 
-            <div className="mt-4 flex flex-col gap-2">
-              <input
-                type="number"
-                min="0"
-                placeholder="উত্তোলন টাকার পরিমাণ"
-                value={withdrawAmount}
-                onChange={(e) => setWithdrawAmount(parseFloat(e.target.value))}
-                className="border px-3 py-2 rounded w-full"
-              />
-              <div className="flex justify-end gap-2">
-                <button
-                  className="bg-gray-500 text-white px-3 py-1 rounded"
-                  onClick={() => setSelectedFdr(null)}
-                >
-                  Close
-                </button>
-                <button
-                  className="bg-green-500 text-white px-3 py-1 rounded"
-                  onClick={() => handleWithdraw(selectedFdr.fdrId)}
-                >
-                  Withdraw
-                </button>
+            {/* ✅ Withdraw only for admin */}
+            {userRole === "admin" && (
+              <div className="mt-4 flex flex-col gap-2">
+                <input
+                  type="number"
+                  min="0"
+                  placeholder="উত্তোলন টাকার পরিমাণ"
+                  value={withdrawAmount}
+                  onChange={(e) =>
+                    setWithdrawAmount(parseFloat(e.target.value))
+                  }
+                  className="border px-3 py-2 rounded w-full"
+                />
+                <div className="flex justify-end gap-2">
+                  <button
+                    className="bg-gray-500 text-white px-3 py-1 rounded"
+                    onClick={() => setSelectedFdr(null)}
+                  >
+                    Close
+                  </button>
+                  <button
+                    className="bg-green-500 text-white px-3 py-1 rounded"
+                    onClick={() => handleWithdraw(selectedFdr.fdrId)}
+                  >
+                    Withdraw
+                  </button>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       )}
 
       {/* Edit Modal */}
-      {editFdr && (
+      {editFdr && userRole === "admin" && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
           <div className="bg-white p-6 rounded-lg w-full max-w-md shadow-lg">
             <h2 className="text-xl font-bold mb-4">Edit FDR</h2>
@@ -226,14 +256,21 @@ const handleDelete = async (id) => {
             <input
               type="number"
               value={updateData.fdrAmount}
-              onChange={(e) => setUpdateData({ ...updateData, fdrAmount: parseFloat(e.target.value) })}
+              onChange={(e) =>
+                setUpdateData({
+                  ...updateData,
+                  fdrAmount: parseFloat(e.target.value),
+                })
+              }
               className="w-full border rounded px-3 py-2 mb-3"
             />
 
             <label className="block mb-1">Status</label>
             <select
               value={updateData.status}
-              onChange={(e) => setUpdateData({ ...updateData, status: e.target.value })}
+              onChange={(e) =>
+                setUpdateData({ ...updateData, status: e.target.value })
+              }
               className="w-full border rounded px-3 py-2 mb-3"
             >
               <option value="active">Active</option>
@@ -244,14 +281,18 @@ const handleDelete = async (id) => {
             <input
               type="date"
               value={updateData.effectiveDate}
-              onChange={(e) => setUpdateData({ ...updateData, effectiveDate: e.target.value })}
+              onChange={(e) =>
+                setUpdateData({ ...updateData, effectiveDate: e.target.value })
+              }
               className="w-full border rounded px-3 py-2 mb-3"
             />
 
             <label className="block mb-1">Description</label>
             <textarea
               value={updateData.description}
-              onChange={(e) => setUpdateData({ ...updateData, description: e.target.value })}
+              onChange={(e) =>
+                setUpdateData({ ...updateData, description: e.target.value })
+              }
               className="w-full border rounded px-3 py-2 mb-3"
             />
 

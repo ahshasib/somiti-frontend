@@ -95,20 +95,20 @@ const router = createBrowserRouter(
               //DPS
               { path: "/dashboard/dps-calculator", element:  (<RoleBasedRoute allowedRoles={["admin","member","agent"]}><DpsCalculator /></RoleBasedRoute>)},
               { path: "/dashboard/dps-scheme-create", element:  (<RoleBasedRoute allowedRoles={["admin"]}><DpsSchemeCreate /></RoleBasedRoute>)},
-              { path: "/dashboard/all-dps-schemes", element:  (<RoleBasedRoute allowedRoles={["admin","agent"]}><AllDpsSchemes /></RoleBasedRoute>)},
+              { path: "/dashboard/all-dps-schemes", element:  (<RoleBasedRoute allowedRoles={["admin","agent","member"]}><AllDpsSchemes /></RoleBasedRoute>)},
               { path: "/dashboard/dps-scheme-settings", element:  (<RoleBasedRoute allowedRoles={["admin"]}><DpsSettingPage /></RoleBasedRoute>)},
               { path: "/dashboard/dps-collection", element:  (<RoleBasedRoute allowedRoles={["admin","agent"]}><DpsCollectionPage /></RoleBasedRoute>)},
               { path: "/dashboard/all-dps-collection", element:  (<RoleBasedRoute allowedRoles={["admin","agent"]}><AllDpsCollections /></RoleBasedRoute>)},
               { path: "/dashboard/dps-management", element:  (<RoleBasedRoute allowedRoles={["admin"]}><DpsManagement /></RoleBasedRoute>)},
               { path: "/dashboard/dps-today", element:  (<RoleBasedRoute allowedRoles={["admin"]}><TodaysDps /></RoleBasedRoute>)},
               { path: "/dashboard/dps-daily-collection-report", element:  (<RoleBasedRoute allowedRoles={["admin"]}><DailyDpsReport /></RoleBasedRoute>)},
-              { path: "/dashboard/dps-member-report", element:  (<RoleBasedRoute allowedRoles={["admin"]}><DpsReport /></RoleBasedRoute>)},
+              { path: "/dashboard/dps-member-report", element:  (<RoleBasedRoute allowedRoles={["admin","agent","member"]}><DpsReport /></RoleBasedRoute>)},
               //FDR
               { path: "/dashboard/fdr-calculator", element:  (<RoleBasedRoute allowedRoles={["admin","member"]}><FdrCalculator /></RoleBasedRoute>)},
               { path: "/dashboard/fdr-scheme-create", element:  (<RoleBasedRoute allowedRoles={["admin"]}><FdrCreate /></RoleBasedRoute>)},
               { path: "/dashboard/fdr-settings", element:  (<RoleBasedRoute allowedRoles={["admin"]}><FdrSettingForm /></RoleBasedRoute>)},
               { path: "/dashboard/all-fdr", element:  (<RoleBasedRoute allowedRoles={["admin"]}><FdrCollectionReport/></RoleBasedRoute>)},
-              { path: "/dashboard/fdr-management", element:  (<RoleBasedRoute allowedRoles={["admin"]}><FdrManagement/></RoleBasedRoute>)},
+              { path: "/dashboard/fdr-management", element:  (<RoleBasedRoute allowedRoles={["admin", "member"]}><FdrManagement/></RoleBasedRoute>)},
               { path: "/dashboard/fdr-collection-report", element:  (<RoleBasedRoute allowedRoles={["admin"]}><TodaysFdrReport /></RoleBasedRoute>)},
               { path: "/dashboard/fdr-deposit-withdraw-report", element:  (<RoleBasedRoute allowedRoles={["admin"]}><FdrTransactionReport /></RoleBasedRoute>)},
                 //অন্যান্য আয়-ব্যয়ের খাত

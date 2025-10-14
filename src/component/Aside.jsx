@@ -263,9 +263,9 @@ const allMenuCategories = [
     subMenu: [
       { name: "FDR ক্যালকুলেটর", path: "/dashboard/fdr-calculator", icon: <FaCalculator />, roles: ["admin", "member"] },
       { name: "FDR স্কিম তৈরি করুন", path: "/dashboard/fdr-scheme-create", icon: <FaFileAlt />, roles: ["admin"] },
-      { name: "FDR ব্যবস্থাপনা", path: "/dashboard/fdr-management", icon: <FaChartPie />, roles: ["admin",] },
+      { name: "FDR ব্যবস্থাপনা", path: "/dashboard/fdr-management", icon: <FaChartPie />, roles: ["admin", "member"] },
       { name: "FDR সেটিং এবং কালেকশন", path: "/dashboard/fdr-settings", icon: <FaCoins />, roles: ["admin"] },
-      { name: "সকল FDR কালেকশন", path: "/dashboard/all-fdr", icon: <MdOutlinePayments />, roles: ["admin", "member"] },
+      { name: "সকল FDR কালেকশন", path: "/dashboard/all-fdr", icon: <MdOutlinePayments />, roles: ["admin"] },
 
       { name: "FDR কালেকশন রিপোর্ট", path: "/dashboard/fdr-collection-report", icon: <FaFileAlt />, roles: ["admin"] },
       { name: "FDR জমা এবং উত্তোলন রিপোর্ট", path: "/dashboard/fdr-deposit-withdraw-report", icon: <FaFileAlt />, roles: ["admin"] },
@@ -279,13 +279,13 @@ const allMenuCategories = [
       { name: "DPS ক্যালকুলেটর", path: "/dashboard/dps-calculator", icon: <FaCalculator />, roles: ["admin", "agent", "member"] },
       { name: "DPS স্কিম তৈরী করুন", path: "/dashboard/dps-scheme-create", icon: <FaFileAlt />, roles: ["admin"] },
       { name: "DPS স্কিম সেটিং করুন", path: "/dashboard/dps-scheme-settings", icon: <FaCoins />, roles: ["admin"] },
-      { name: "সকল DPS স্কিম", path: "/dashboard/all-dps-schemes", icon: <MdOutlinePayments />, roles: ["admin", "agent"] },
+      { name: "সকল DPS স্কিম", path: "/dashboard/all-dps-schemes", icon: <MdOutlinePayments />, roles: ["admin", "agent", "member"] },
       { name: "DPS ব্যবস্থাপনা", path: "/dashboard/dps-management", icon: <FaChartPie />, roles: ["admin"] },
       { name: "DPS কালেকশন করুন", path: "/dashboard/dps-collection", icon: <FaMoneyBillWave />, roles: ["admin", "agent"] },
-      { name: "সকল DPS কালেকশন", path: "/dashboard/all-dps-collection", icon: <MdOutlinePayments />, roles: ["admin", "agent", "member"] },
+      { name: "সকল DPS কালেকশন", path: "/dashboard/all-dps-collection", icon: <MdOutlinePayments />, roles: ["admin", "agent"] },
       { name: "আজ DPS এর কিস্তি দেয়ার তারিখ", path: "/dashboard/dps-today", icon: <MdAccessTime />, roles: ["admin", "agent"] },
       { name: "দৈনিক DPS কালেকশন রিপোর্ট", path: "/dashboard/dps-daily-collection-report", icon: <FaFileAlt />, roles: ["admin", "agent"] },
-      { name: "সকল DPS সদস্যের লেনদেন রিপোর্ট", path: "/dashboard/dps-member-report", icon: <FaUsers />, roles: ["admin"] },
+      { name: "সকল DPS সদস্যের লেনদেন রিপোর্ট", path: "/dashboard/dps-member-report", icon: <FaUsers />, roles: ["admin","agent","member"] },
 
     ],
   },
