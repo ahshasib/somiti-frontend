@@ -53,7 +53,7 @@ const Login = () => {
         <button className="bg-blue-500 text-white px-4 py-2 rounded w-full">
           লগইন
         </button>
-        {message && <p className="text-red-500 mt-2 text-center">{message}</p>}
+        {message && <p className="text-red-500 mt-2 text-center">সঠিক নাম্বার ,পাস ইউস করুন </p>}
       </form>
     </div>
   );

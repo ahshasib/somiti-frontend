@@ -27,7 +27,7 @@ const FdrTransactionReport = () => {
   }, [type, date]);
 
   return (
-    <div className="p-6 min-h-screen bg-gradient-to-b from-indigo-50 to-purple-50">
+    <div className="p-6 min-h-screen ">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold text-indigo-700 flex items-center gap-2">

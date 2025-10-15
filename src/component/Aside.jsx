@@ -404,7 +404,7 @@ const Aside = ({ isOpen, onClose }) => {
 
       <aside
         className={`
-            fixed lg:relative z-50 w-64 mt-16 lg:mt-0 h-full lg:h-auto bg-gradient-to-b from-gray-200 via-gray-100 to-gray-200 border-r border-gray-200 p-6
+            fixed lg:relative z-50 w-64 mt-16 lg:mt-0 h-full lg:h-auto bg-gradient-to-b from-gray-50 via-gray-100 to-gray-50 border-r border-gray-200 p-6
                transform transition-transform duration-300
               ${isOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0
                overflow-y-auto

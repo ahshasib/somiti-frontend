@@ -43,7 +43,7 @@ const FdrCalculator = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-indigo-100 flex items-start justify-center p-6">
+    <div className="min-h-screen  flex items-start justify-center p-6">
       <div className="w-full max-w-2xl bg-white rounded-2xl shadow-xl p-6">
         <h2 className="text-2xl font-bold text-center mb-4">🧮 FDR ক্যালকুলেটর</h2>
 

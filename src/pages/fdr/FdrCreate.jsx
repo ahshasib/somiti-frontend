@@ -50,7 +50,7 @@ const FdrCreate = () => {
     };
 
     return (
-        <div className="min-h-screen bg-indigo-50 flex items-start justify-center p-6">
+        <div className="min-h-screen flex items-start justify-center p-6">
             <div className="w-full max-w-xl bg-white rounded-2xl shadow-lg p-6">
                 <h2 className="text-2xl font-bold mb-6 text-center">FDR স্কিম তৈরি করুন</h2>
 

@@ -5,8 +5,8 @@ const HeroSection = () => {
     return (
         <section className="relative bg-white min-h-[70vh] flex items-center justify-center overflow-hidden">
             {/* Bubble Shadow Effect */}
-            <div className="absolute -top-20 -left-20 w-72 h-72 bg-indigo-200 rounded-full blur-3xl opacity-50 z-100"></div>
-            <div className=" absolute bottom-0 right-0 w-96 h-96 bg-violet-200 rounded-full blur-3xl opacity-40 z-100"></div>
+            <div className="absolute hidden md:block -top-20 -left-20 w-72 h-72 bg-indigo-200 rounded-full blur-3xl opacity-50 z-100"></div>
+            <div className=" absolute hidden md:block bottom-0 right-0 w-96 h-96 bg-violet-200 rounded-full blur-3xl opacity-40 z-100"></div>
 
             {/* Content */}
             <div className="w-11/12 md:w-10/12 mx-auto grid md:grid-cols-2 gap-10 items-center z-10">

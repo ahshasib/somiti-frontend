@@ -25,10 +25,10 @@ const Footer = () => {
         <div>
           <h3 className="text-xl font-semibold mb-4">যোগাযোগ</h3>
           <p className="flex items-center gap-2 mb-2">
-            <FaPhone /> +880 1234-567890
+            <FaPhone /> +880 1730-848524
           </p>
           <p className="flex items-center gap-2 mb-2">
-            <FaEnvelope /> info@somiti.com
+            <FaEnvelope />  usrcsltd@gmail.com
           </p>
           <p className="flex items-center gap-2">
             <FaMapMarkerAlt /> ঢাকা, বাংলাদেশ

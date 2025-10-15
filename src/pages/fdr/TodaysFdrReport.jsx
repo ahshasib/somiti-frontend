@@ -29,7 +29,7 @@ const FdrDailyReport = () => {
     const totalAmount = report.reduce((sum, item) => sum + item.fdrAmount, 0);
 
     return (
-        <div className="p-6 bg-gradient-to-b from-indigo-50 via-white to-indigo-50 min-h-screen">
+        <div className="p-6  min-h-screen">
             <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg p-6">
                 {/* Header Section */}
                 <div className="flex flex-col md:flex-row justify-between items-center mb-6">
